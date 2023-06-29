@@ -7,55 +7,24 @@ import MainFrame from "@/components/main-frame";
 
 const HomeIndex = () => {
     const [isLogin, setIsLoginState] = useRecoilState(isLoginState);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [detectScroll, setDetectScroll] = useState({
-        direction: 0,
-    });
-    const targetRef = useRef<HTMLDivElement>(null);
-    const handleWheel = (e) => {
-        setDetectScroll({
-            direction: e.deltaY,
-        });
-    }
-    const isScroll = useRef<boolean>(false);
-
-    const scrollEvent = (isUp: boolean) => {
-        if (isScroll.current) return ;
-        else {
-            isScroll.current = true;
-            if (isUp) {
-                setCurrentPage(currentPage + 1);
-            } else {
-                setCurrentPage(currentPage - 1);
-            }
-            setTimeout(() => {
-                isScroll.current = false;
-            }, 100);
-        }
-    }
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            window.addEventListener("mousewheel", handleWheel);
-        }, 100);
-        return () => {
-            clearInterval(timer);
-            window.removeEventListener("mousewheel", handleWheel);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (detectScroll.direction > 0) {
-            scrollEvent(true);
-        } else {
-            if (currentPage > 0) scrollEvent(false);
-        }
-    }, [detectScroll]);
 
     return (
-        <div className="Home" ref={targetRef}>
+        <div className="main_wrap">
+            <div className="side_menu">
+                <div className="site_map_btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div className="container">
+                    <ul>
+                        <li data="1번"></li>
+                        <li data="2번"></li>
+                    </ul>
+                </div>
+            </div>
             <MainFrame
-                page={currentPage}
+                page={0}
             ></MainFrame>
         </div>
     );
