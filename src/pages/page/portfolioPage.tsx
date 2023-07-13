@@ -5,9 +5,8 @@ import { Mousewheel, Pagination } from "swiper";
 class Props {
     currentPage: number
 }
-const Page_1 = (props: Props) => {
-    const pageNumber = 1;
-
+const PortfolioPage = (props: Props) => {
+    const pageNumber = 2;
     return (
         <div className="swiper-slide">
             <Swiper
@@ -22,17 +21,17 @@ const Page_1 = (props: Props) => {
                 className="mySwiper"
             >
                 <SwiperSlide>
-                    Slide A
+                    포트폴리오 A
                 </SwiperSlide>
                 <SwiperSlide>
-                    Slide B
+                    포트폴리오 B
                 </SwiperSlide>
                 <SwiperSlide>
-                    Slide C
+                    포트폴리오 C
                 </SwiperSlide>
             </Swiper>
         </div>
     );
 };
 
-export default Page_1;
+export default PortfolioPage;

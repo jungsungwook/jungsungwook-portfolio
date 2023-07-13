@@ -10,22 +10,22 @@ const SignIn = () => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
 
-      const res = await axios({
-        method: 'post' as Method,
-        url: `/api/auth/signin`,
-        data: {
-          customId: data.get('customId'),
-          password: data.get('password'),
-        },
-      });
-      const result = res.data;
-      localStorage.setItem('accessToken', result.contents);
-      if (result.statusCode != 200 || result.statusCode != '200') {
-        alert(result.contents);
-        return;
-      }
-      localStorage.setItem('isLogin', 'true')
-      Router.push('/');
+      // const res = await axios({
+      //   method: 'post' as Method,
+      //   url: `/api/auth/signin`,
+      //   data: {
+      //     customId: data.get('customId'),
+      //     password: data.get('password'),
+      //   },
+      // });
+      // const result = res.data;
+      // localStorage.setItem('accessToken', result.contents);
+      // if (result.statusCode != 200 || result.statusCode != '200') {
+      //   alert(result.contents);
+      //   return;
+      // }
+      // localStorage.setItem('isLogin', 'true')
+      // Router.push('/');
     };
     return (
       <div className='login'>

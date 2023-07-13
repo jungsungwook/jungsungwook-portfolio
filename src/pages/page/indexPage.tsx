@@ -3,9 +3,9 @@ import Typed from 'typed.js';
 import { useRef, useEffect } from "react";
 import anime from "animejs";
 class Props {
-    currentPage: number
+    currentPage: number | undefined;
 }
-const Page_0 = (props: Props) => {
+const IndexPage = (props: Props) => {
     const pageNumber = 0;
     const el = useRef(null);
     const el2 = useRef(null);
@@ -25,7 +25,6 @@ const Page_0 = (props: Props) => {
                 self.cursor.remove();
                 const typed2 = new Typed(el2.current, {
                     strings: ["^300Welcome to my <strong>Portfolio</strong> website.^300"],
-                    typeSpeed: 50,
                     typeSpeed: 50,
                     startDelay: 0,
                     backSpeed: 0,
@@ -50,11 +49,11 @@ const Page_0 = (props: Props) => {
                             fireworks.style.height = window.innerHeight + 'px';
                             fireworks.getContext('2d').scale(2, 2);
                         }
-                        const updateCoords = (e) => {
+                        const updateCoords = (e: any) => {
                             pointerX = e.clientX || e.touches[0].clientX;
                             pointerY = e.clientY || e.touches[0].clientY;
                         }
-                        const setParticuleDirection = (p) => {
+                        const setParticuleDirection = (p: any) => {
                             const angle = anime.random(0, 360) * Math.PI / 180;
                             const value = anime.random(50, 180);
                             const radius = [-1, 1][anime.random(0, 1)] * value;
@@ -63,8 +62,8 @@ const Page_0 = (props: Props) => {
                                 y: p.y + radius * Math.sin(angle)
                             }
                         }
-                        const createParticule = (x, y) => {
-                            const p = {};
+                        const createParticule = (x: any, y: any) => {
+                            const p: any = {};
                             p.x = x;
                             p.y = y;
                             p.color = colors[anime.random(0, colors.length - 1)];
@@ -78,8 +77,8 @@ const Page_0 = (props: Props) => {
                             }
                             return p;
                         }
-                        const createCircle = (x, y) => {
-                            const p = {};
+                        const createCircle = (x: any, y: any) => {
+                            const p: any = {};
                             p.x = x;
                             p.y = y;
                             p.color = '#FFF';
@@ -97,12 +96,12 @@ const Page_0 = (props: Props) => {
                             }
                             return p;
                         }
-                        const renderParticule = (anim) => {
+                        const renderParticule = (anim: any) => {
                             for (let i = 0; i < anim.animatables.length; i++) {
                                 anim.animatables[i].target.draw();
                             }
                         }
-                        const animateParticules = (x, y) => {
+                        const animateParticules = (x: any, y: any) => {
                             const circle = createCircle(x, y);
                             const particules = [];
                             for (let i = 0; i < numberOfParticules; i++) {
@@ -149,11 +148,12 @@ const Page_0 = (props: Props) => {
                         const centerY = window.innerHeight / 2;
                         const autoClick = () => {
                             if (window.human) return;
+                            const rand_duration = Math.floor(Math.random() * 400) + 100;
                             animateParticules(
-                                anime.random(centerX - 50, centerX + 50),
-                                anime.random(centerY - 50, centerY + 50)
+                                anime.random(centerX - 200, centerX + 200),
+                                anime.random(centerY - 200, centerY + 200)
                             );
-                            anime({ duration: 200 }).finished.then(autoClick);
+                            anime({ duration: rand_duration }).finished.then(autoClick);
                         };
                         autoClick();
                         setCanvasSize();
@@ -167,18 +167,20 @@ const Page_0 = (props: Props) => {
         }
     }, []);
     return (
-        <div className="swiper-slide">
-            <div className="page_0_wrap">
-                <div className="page_0_title">
-                    <span style={{ whiteSpace: 'pre' }} className="introduce_01_span" ref={el} />
+        <>
+            <div className="swiper-slide">
+                <div className="page_0_wrap">
+                    <div className="page_0_title">
+                        <span style={{ whiteSpace: 'pre' }} className="introduce_01_span" ref={el} />
+                    </div>
+                    <div className="page_0_title_02">
+                        <span style={{ whiteSpace: 'pre' }} className="introduce_02_span" ref={el2} />
+                    </div>
+                    <canvas style={{ position: "fixed" }} className="fireworks"></canvas>
                 </div>
-                <div className="page_0_title_02">
-                    <span style={{ whiteSpace: 'pre' }} className="introduce_02_span" ref={el2} />
-                </div>
-                <canvas className="fireworks"></canvas>
             </div>
-        </div>
+        </>
     );
 };
 
-export default Page_0;
+export default IndexPage;

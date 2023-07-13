@@ -1,11 +1,14 @@
-import React from 'react';
-import Page_0 from '@/pages/page/page_0';
-import Page_1 from '@/pages/page/page_1';
-import Page_2 from '@/pages/page/page_2';
+import React, { useEffect } from 'react';
+import IndexPage from '@/pages/page/indexPage';
+import ProfilePage from '@/pages/page/profilePage';
+import CareerPage from '@/pages/page/careerPage';
+import PortfolioPage from '@/pages/page/portfolioPage';
+import SubmitPage from '@/pages/page/submitPage';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/pagination";
 import { Mousewheel, Pagination } from "swiper";
+import AboutPage from '@/pages/page/aboutPage';
 /**
  * MainFrame은 페이지의 메인 프레임을 구성하는 컴포넌트입니다.
  * @feature
@@ -17,15 +20,22 @@ class MainFrameProps {
     /**
      * 현재 페이지의 인덱스입니다.
      */
-    page: number;
+    page: number | undefined;
 }
 const MainFrame = (props: MainFrameProps) => {
     // 현재 페이지의 인덱스
     const [currentPage, setCurrentPage] = React.useState(props.page);
-    // 페이지의 인덱스를 변경합니다.
-    const loadPage = (page: number) => {
 
+    const loadPage = (page: number) => {
+        // 페이지를 로드합니다.
+        // 페이지를 로드할 때 슬라이드 애니메이션을 적용합니다.
+        console.log(page)
     }
+
+    useEffect(() => {
+        // 페이지가 변경되면 페이지를 로드합니다.
+        loadPage(currentPage as number);
+    }, [currentPage]);
     return (
         <>
             <Swiper
@@ -64,31 +74,67 @@ const MainFrame = (props: MainFrameProps) => {
                     </a>
                     <ul className="gnb">
                         <li className={currentPage == 0 ? "on" : ""}>
-                            <a href="/home" className="en">
+                            <a href="#" onclick="setCurrentPage(0)" className="en">
                                 <span>
                                     Index
                                 </span>
                             </a>
                         </li>
                         <li className={currentPage == 1 ? "on" : ""}>
-                            <a href="/home" className="en">
+                            <a href="#" onclick="setCurrentPage(0)" className="en">
                                 <span>
-                                    Portfolio
+                                    About
                                 </span>
                             </a>
                         </li>
                         <li className={currentPage == 2 ? "on" : ""}>
-                            <a href="/home" className="en">
+                            <a href="#" onclick="setCurrentPage(0)" className="en">
                                 <span>
                                     Career
                                 </span>
                             </a>
                         </li>
+                        <li className={currentPage == 3 ? "on" : ""}>
+                            <a href="#" onclick="setCurrentPage(0)" className="en">
+                                <span>
+                                    Portfolio
+                                </span>
+                            </a>
+                        </li>
+                        <li className={currentPage == 4 ? "on" : ""}>
+                            <a href="#" className="en">
+                                <span>
+                                    Submit
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
-                <SwiperSlide><Page_0 /></SwiperSlide>
-                <SwiperSlide><Page_1 /></SwiperSlide>
-                <SwiperSlide><Page_2 /></SwiperSlide>
+                <SwiperSlide
+                    style ={{
+                        backgroundColor: "#f8f8f8",
+                    }}
+                ><IndexPage /></SwiperSlide>
+                <SwiperSlide
+                    style ={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "#f8f8f8",
+                        overflow: "visible"
+                    }}
+                ><AboutPage /></SwiperSlide>
+                <SwiperSlide
+                    style ={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "#f8f8f8",
+                        overflow: "visible"
+                    }}
+                ><CareerPage /></SwiperSlide>
+                <SwiperSlide><PortfolioPage /></SwiperSlide>
+                <SwiperSlide><SubmitPage /></SwiperSlide>
             </Swiper >
         </>
     );
