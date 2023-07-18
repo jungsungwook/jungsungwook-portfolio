@@ -8,6 +8,8 @@ const {
     createCanvas
 } = require('canvas');
 
+const initialize = require('./initialize');
+
 const dev = process.env.NODE_ENV !== 'production';
 const prod = process.env.NODE_ENV === 'production';
 
@@ -60,8 +62,14 @@ app.prepare().then(() => {
         }),
     );
 
+    initialize();
+
     server.get('*', (req, res) => { // 모든 get 요청 처리
         return handle(req, res); // next의 get 요청 처리기
+    });
+
+    server.post('*', (req, res) => { // 모든 post 요청 처리
+        return handle(req, res); // next의 post 요청 처리기
     });
 
     server.listen(ports.next, () => {
