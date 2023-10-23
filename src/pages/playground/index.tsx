@@ -15,7 +15,6 @@ const PlayGroundIndex = () => {
             url: `/api/auth/islogin`,
         }).then((res) => {
             const result = res.data;
-            console.log(result)
             if (result.statusCode == 200 || result.statusCode == '200') {
                 setUser({
                     id: result.contents.id,

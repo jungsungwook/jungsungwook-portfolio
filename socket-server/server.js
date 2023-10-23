@@ -73,7 +73,7 @@ app.prepare().then(() => {
     });
 
     server.listen(ports.next, () => {
-        console.log('next+expresss running on port 3000');
+        console.log('next+expresss running on port ' + process.env.NEXT_PUBLIC_Socket_Port);
     });
     //socketserver
     const io = require('socket.io')(socketserver, {
