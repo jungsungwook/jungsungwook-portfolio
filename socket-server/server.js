@@ -15,8 +15,10 @@ const prod = process.env.NODE_ENV === 'production';
 
 dotenv.config();
 
+console.log(dev ? `Running on development mode` : `Running on production mode`)
+
 const app = next({
-    dev
+    dev: dev
 }); // next 모듈을 사용
 
 const handle = app.getRequestHandler();
@@ -88,9 +90,6 @@ app.prepare().then(() => {
     io.on('connection', socket => {
         // socket으로 메세지가 들어올 때 
         socket.on('message', (data) => {
-                console.log(data)
-                // ip 출력
-                console.log(socket.handshake.address)
                 // 랜덤 uid
                 const uid = Math.random().toString(36).substr(2, 11);
                 socketUid[socket.id] = uid;
@@ -145,7 +144,6 @@ app.prepare().then(() => {
             })
             
             socket.on('disconnect', () => {
-                console.log('user disconnected: ', socketUid[socket.id]);
                 socket.broadcast.emit('guest_exit', {
                     uid: socketUid[socket.id],
                 })

@@ -42,18 +42,15 @@ const PaintFrame = () => {
 
         // 소켓 통신 연결
         {/* @ts-ignore */}
-        const socket = SocketIoClient.connect('http://122.199.176.80:8080', {
+        const socket = SocketIoClient.connect(`${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_Socket_Port}`,{
         });
-
         socket.on("connect", () => {
-            console.log("connected");
             socketRef.current = socket;
             setConnected(true);
             socket.emit("message", "hello server")
         });
 
         socket.on("guest_enter", (data: { uid: string }) => {
-            console.log(`guest enter ${data.uid}`);
             otherUser.push(data.uid);
 
             const newCanvas : any = document.createElement("canvas");
@@ -152,7 +149,6 @@ const PaintFrame = () => {
             try {
                 otherContext.lineWidth = data.lineWidth ? data.lineWidth : 2.5;
                 otherContext.globalCompositeOperation = data.opt;
-                console.log(data.opt)
                 otherContext.strokeStyle = data.color ? data.color : "red";
                 otherContext.lineTo(data.offsetX, data.offsetY);
                 otherContext.stroke();

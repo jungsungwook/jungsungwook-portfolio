@@ -12,7 +12,7 @@ const HomeIndex = () => {
     return (
         <>
             <Head>
-                <meta property="og:url" content="http://122.199.176.80:3000/" />
+                <meta property="og:url" content="https://sungwook.net/" />
                 <meta property="og:type" content="website" />
                 <meta property="og:image" content="https://avatars.githubusercontent.com/u/20926860?v=4" />
                 <meta property="og:description" content="공유기능 | 열심히 코드를 공부합시다." />
