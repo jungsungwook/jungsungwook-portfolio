@@ -75,7 +75,7 @@ app.prepare().then(() => {
     });
 
     server.listen(ports.next, () => {
-        console.log('next+expresss running on port ' + process.env.NEXT_PUBLIC_Socket_Port);
+        console.log('next+expresss running on port ' + process.env.NEXT_PUBLIC_React_Port);
     });
     //socketserver
     const io = require('socket.io')(socketserver, {
@@ -155,7 +155,7 @@ app.prepare().then(() => {
     });
 
     socketserver.listen(ports.socket, function () {
-        console.log('listening on socket port 8080');
+        console.log(`listening on socket port ${process.env.NEXT_PUBLIC_Socket_Port}`);
     })
 
     const mergeCanvas = () => {
