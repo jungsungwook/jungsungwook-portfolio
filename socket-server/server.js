@@ -25,7 +25,7 @@ const handle = app.getRequestHandler();
 
 //socket
 const socketapp = require('express')();
-const socketserver = require('http').createServer(socketapp)
+const socketserver = require('https').createServer(socketapp)
 const cors = require('cors');
 socketapp.use(cors());
 const ports = {
