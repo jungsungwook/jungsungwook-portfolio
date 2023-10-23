@@ -2,10 +2,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import "swiper/css/pagination";
 import { Mousewheel, Pagination } from "swiper";
-class Props {
-    currentPage: number
-}
-const PortfolioPage = (props: Props) => {
+
+const PortfolioPage = () => {
     const pageNumber = 2;
     return (
         <div className="swiper-slide">

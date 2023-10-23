@@ -30,7 +30,7 @@ const CareerPage = (props: Props) => {
             </div>
             <div className="timeline-description">
                 <span className="td-title">- 정보처리기능사 및 OCJP 취득</span>
-                <span className="td-description" dd></span>
+                <span className="td-description" ></span>
             </div>
             <div className="timeline-description">
                 <span className="td-title">- 방산고등학교 졸업</span>
@@ -216,7 +216,7 @@ const CareerPage = (props: Props) => {
     // 화면 사이즈가 바뀌었을 때
     useEffect(() => {
         window.addEventListener('resize', () => {
-            const chronoCard = document.querySelector('.chrono-card');
+            const chronoCard = document.querySelector('.chrono-card') as HTMLElement;
             if (chronoCard) {
                 chronoCard.style.height = `${window.innerHeight * 0.5}px`;
                 chronoCard.style.width = `${window.innerWidth * 0.5}px`;

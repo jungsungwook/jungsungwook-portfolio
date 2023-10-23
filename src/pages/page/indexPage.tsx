@@ -2,10 +2,8 @@ import { SwiperSlide } from "swiper/react";
 import Typed from 'typed.js';
 import { useRef, useEffect } from "react";
 import anime from "animejs";
-class Props {
-    currentPage: number | undefined;
-}
-const IndexPage = (props: Props) => {
+
+const IndexPage = () => {
     const pageNumber = 0;
     const el = useRef(null);
     const el2 = useRef(null);
@@ -35,19 +33,19 @@ const IndexPage = (props: Props) => {
                     loop: false,
                     contentType: 'html',
                     onComplete: (self2) => {
-                        const fireworks = document.querySelector('.fireworks');
-                        const ctx = fireworks.getContext('2d');
+                        const fireworks = document.querySelector('.fireworks') as HTMLCanvasElement;
+                        const ctx = fireworks.getContext('2d') as CanvasRenderingContext2D;
                         const numberOfParticules = 30;
                         let pointerX = 0;
                         let pointerY = 0;
-                        const tap = ('ontouchstart' in window || navigator.msMaxTouchPoints) ? 'touchstart' : 'click';
+                        const tap = ('ontouchstart' in window || navigator.maxTouchPoints) ? 'touchstart' : 'click';
                         const colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C'];
                         const setCanvasSize = () => {
                             fireworks.width = window.innerWidth * 2;
                             fireworks.height = window.innerHeight * 2;
                             fireworks.style.width = window.innerWidth + 'px';
                             fireworks.style.height = window.innerHeight + 'px';
-                            fireworks.getContext('2d').scale(2, 2);
+                            fireworks.getContext('2d')?.scale(2, 2);
                         }
                         const updateCoords = (e: any) => {
                             pointerX = e.clientX || e.touches[0].clientX;
@@ -109,8 +107,8 @@ const IndexPage = (props: Props) => {
                             }
                             anime.timeline().add({
                                 targets: particules,
-                                x(p) { return p.endPos.x; },
-                                y(p) { return p.endPos.y; },
+                                x(p: any) { return p.endPos.x; },
+                                y(p: any) { return p.endPos.y; },
                                 radius: 0.1,
                                 duration: anime.random(1200, 1800),
                                 easing: 'easeOutExpo',
@@ -138,6 +136,7 @@ const IndexPage = (props: Props) => {
                             }
                         });
                         document.addEventListener(tap, (e) => {
+                            {/* @ts-ignore */}
                             window.human = true;
                             render.play();
                             updateCoords(e);
@@ -147,6 +146,7 @@ const IndexPage = (props: Props) => {
                         const centerX = window.innerWidth / 2;
                         const centerY = window.innerHeight / 2;
                         const autoClick = () => {
+                            {/* @ts-ignore */}
                             if (window.human) return;
                             const rand_duration = Math.floor(Math.random() * 400) + 100;
                             animateParticules(

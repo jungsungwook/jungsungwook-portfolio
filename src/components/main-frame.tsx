@@ -46,8 +46,6 @@ const MainFrame = (props: MainFrameProps) => {
                 pagination={
                     {
                         clickable: true,
-                        observer: true,	// 추가
-                        observeParents: true,	// 추가
                     }
                 }
                 modules={[Mousewheel, Pagination]}
@@ -57,7 +55,7 @@ const MainFrame = (props: MainFrameProps) => {
                 className="main_swiper"
             >
                 <div className="main_header">
-                    <a herf="/home" className="logo">
+                    <a href="/home" className="logo">
                         <div className="img">
                             <img src="/Sun.png" />
                         </div>
@@ -74,28 +72,32 @@ const MainFrame = (props: MainFrameProps) => {
                     </a>
                     <ul className="gnb">
                         <li className={currentPage == 0 ? "on" : ""}>
-                            <a href="#" onclick="setCurrentPage(0)" className="en">
+                            {/* @ts-ignore */}
+                            <a href="#" onClick="setCurrentPage(0)" className="en">
                                 <span>
                                     Index
                                 </span>
                             </a>
                         </li>
                         <li className={currentPage == 1 ? "on" : ""}>
-                            <a href="#" onclick="setCurrentPage(0)" className="en">
+                            {/* @ts-ignore */}
+                            <a href="#" onClick="setCurrentPage(0)" className="en">
                                 <span>
                                     About
                                 </span>
                             </a>
                         </li>
                         <li className={currentPage == 2 ? "on" : ""}>
-                            <a href="#" onclick="setCurrentPage(0)" className="en">
+                            {/* @ts-ignore */}
+                            <a href="#" onClick="setCurrentPage(0)" className="en">
                                 <span>
                                     Career
                                 </span>
                             </a>
                         </li>
                         <li className={currentPage == 3 ? "on" : ""}>
-                            <a href="#" onclick="setCurrentPage(0)" className="en">
+                            {/* @ts-ignore */}
+                            <a href="#" onClick="setCurrentPage(0)" className="en">
                                 <span>
                                     Portfolio
                                 </span>

@@ -8,10 +8,10 @@ import SocketIoClient from 'socket.io-client';
  */
 const PaintFrame = () => {
     const canvasRef = useRef(null);
-    const otherCanvasContext = {}
+    const otherCanvasContext : any = {}
     const contextRef = useRef(null);
-    const [ctx, setCtx] = useState();
-    const otherUser = [];
+    const [ctx, setCtx]: any = useState();
+    const otherUser: any[] = [];
 
     const [isDrawing, setIsDrawing] = useState(false);
     const [connected, setConnected] = useState<boolean>(false);
@@ -21,10 +21,10 @@ const PaintFrame = () => {
 
     useEffect(() => {
         window.addEventListener("contextmenu", e => e.preventDefault());
-        const backgroundCanvas = document.getElementById("background");
+        const backgroundCanvas = document.getElementById("background") as HTMLCanvasElement;
         const image = new Image();
         image.src = "background.png";
-        const backctx = backgroundCanvas.getContext("2d");
+        const backctx = backgroundCanvas?.getContext("2d") as CanvasRenderingContext2D;
         image.onload = () => {
             backctx.drawImage(image, 0, 0, 2560, 1440);
         }
@@ -41,6 +41,7 @@ const PaintFrame = () => {
         setCtx(context);
 
         // 소켓 통신 연결
+        {/* @ts-ignore */}
         const socket = SocketIoClient.connect('http://122.199.176.80:8080', {
         });
 
@@ -55,18 +56,18 @@ const PaintFrame = () => {
             console.log(`guest enter ${data.uid}`);
             otherUser.push(data.uid);
 
-            const newCanvas = document.createElement("canvas");
+            const newCanvas : any = document.createElement("canvas");
             newCanvas.id = data.uid + "_canvas";
             newCanvas.width = 2560;
             newCanvas.height = 1440;
-            const newContext = newCanvas.getContext("2d");
+            const newContext = newCanvas.getContext("2d") as CanvasRenderingContext2D;
             newContext.strokeStyle = "red";
             newContext.lineWidth = 2.5;
             otherCanvasContext[data.uid] = newContext;
 
             newCanvas.ref = newContext;
 
-            const paintFrame = document.querySelector(".paint_frame");
+            const paintFrame = document.querySelector(".paint_frame") as HTMLDivElement;
             paintFrame.appendChild(newCanvas);
 
             // 마우스 포인터 생성
@@ -96,18 +97,18 @@ const PaintFrame = () => {
             for (const user of users) {
                 if (user !== data.uid) {
                     otherUser.push(user);
-                    const newCanvas = document.createElement("canvas");
+                    const newCanvas : any = document.createElement("canvas");
                     newCanvas.id = user + "_canvas";
                     newCanvas.width = 2560;
                     newCanvas.height = 1440;
-                    const newContext = newCanvas.getContext("2d");
+                    const newContext = newCanvas.getContext("2d") as CanvasRenderingContext2D;
                     newContext.strokeStyle = "red";
                     newContext.lineWidth = 2.5;
                     otherCanvasContext[user] = newContext;
 
                     newCanvas.ref = newContext;
 
-                    const paintFrame = document.querySelector(".paint_frame");
+                    const paintFrame = document.querySelector(".paint_frame") as HTMLDivElement;
                     paintFrame.appendChild(newCanvas);
 
                     const pointer = document.createElement("div");
@@ -134,18 +135,18 @@ const PaintFrame = () => {
             const otherContext = otherCanvasContext[data.uid];
             if (!otherContext) {
                 otherUser.push(data.uid);
-                const newCanvas = document.createElement("canvas");
+                const newCanvas : any = document.createElement("canvas");
                 newCanvas.id = data.uid + "_canvas";
                 newCanvas.width = 2560;
                 newCanvas.height = 1440;
-                const newContext = newCanvas.getContext("2d");
+                const newContext = newCanvas.getContext("2d") as CanvasRenderingContext2D;
                 newContext.strokeStyle = data.color ? data.color : "red";
                 newContext.lineWidth = 2.5;
                 otherCanvasContext[data.uid] = newContext;
 
                 newCanvas.ref = newContext;
 
-                const paintFrame = document.querySelector(".paint_frame");
+                const paintFrame = document.querySelector(".paint_frame") as HTMLDivElement;
                 paintFrame.appendChild(newCanvas);
             }
             try {
@@ -173,18 +174,18 @@ const PaintFrame = () => {
             const otherContext = otherCanvasContext[data.uid];
             if (!otherContext) {
                 otherUser.push(data.uid);
-                const newCanvas = document.createElement("canvas");
+                const newCanvas : any = document.createElement("canvas");
                 newCanvas.id = data.uid + "_canvas";
                 newCanvas.width = 2560;
                 newCanvas.height = 1440;
-                const newContext = newCanvas.getContext("2d");
+                const newContext = newCanvas.getContext("2d") as CanvasRenderingContext2D;
                 newContext.strokeStyle = "red";
                 newContext.lineWidth = 2.5;
                 otherCanvasContext[data.uid] = newContext;
 
                 newCanvas.ref = newContext;
 
-                const paintFrame = document.querySelector(".paint_frame");
+                const paintFrame = document.querySelector(".paint_frame") as HTMLDivElement;
                 paintFrame.appendChild(newCanvas);
                 return;
             }
@@ -192,22 +193,22 @@ const PaintFrame = () => {
             otherContext.moveTo(data.offsetX, data.offsetY);
         });
 
-        socket.on("sync_canvas", (data: { canvas: Base64 }) => {
+        socket.on("sync_canvas", (data: { canvas: any }) => {
             loadCanvas(data.canvas);
         });
 
         const onResize = () => {
             // 모든 canvas 가져오기
-            const canvasList = document.querySelectorAll("canvas");
+            const canvasList = document.querySelectorAll("canvas") as any;
             for (const canvas of canvasList) {
                 canvas.width = 2560;
                 canvas.height = 1440;
             }
 
-            const backgroundCanvas = document.getElementById("background");
+            const backgroundCanvas = document.getElementById("background") as HTMLCanvasElement;
             const image = new Image();
             image.src = "background.png";
-            const backctx = backgroundCanvas.getContext("2d");
+            const backctx = backgroundCanvas.getContext("2d") as CanvasRenderingContext2D;
             image.onload = () => {
                 backctx.drawImage(image, 0, 0, 2560, 1440);
             }
@@ -240,17 +241,17 @@ const PaintFrame = () => {
     };
 
     const loadCanvas = (
-        imageData: Base64
+        imageData: any
     ) => {
-        const canvas = document.getElementById("load_canvas");
-        const ctx = canvas.getContext("2d");
+        const canvas = document.getElementById("load_canvas") as HTMLCanvasElement;
+        const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
         const image = new Image();
         image.src = imageData;
         image.onload = () => {
             ctx.drawImage(image, 0, 0, 2560, 1440);
         }
     }
-    
+
     const popModal = () => {
         const modal = document.createElement("div");
         modal.className = "modal_frame";
@@ -278,7 +279,7 @@ const PaintFrame = () => {
         modalButtonImage.src = "okbutton.png";
         modalButton.appendChild(modalButtonImage);
         modalButton.onclick = () => {
-            const modal = document.getElementById("modal_frame");
+            const modal = document.getElementById("modal_frame") as HTMLDivElement;
             modal.remove();
         }
         modalBody.appendChild(modalBodyContent);
@@ -286,19 +287,22 @@ const PaintFrame = () => {
         modalContent.appendChild(modalBody);
         modalContent.appendChild(modalButton);
         modal.appendChild(modalContent);
-        const body = document.querySelector("body");
+        const body = document.querySelector("body") as HTMLBodyElement;
         body.appendChild(modal);
-        
+
     }
 
-    const drawing = ({ nativeEvent }) => {
+    const drawing = ({ nativeEvent } : any) => {
         const { offsetX, offsetY } = nativeEvent;
         if (ctx) {
             ctx.strokeStyle = colorRef.current ? colorRef.current : "black";
             if (!isDrawing) {
                 ctx.beginPath();
                 ctx.moveTo(offsetX, offsetY);
-                socketRef.current.emit("mouse_move", { offsetX, offsetY });
+                try {
+                    {/* @ts-ignore */}
+                    socketRef.current.emit("mouse_move", { offsetX, offsetY });
+                } catch (e) { }
             } else {
                 if (ctx.globalCompositeOperation == "destination-out") {
                     ctx.lineTo(offsetX, offsetY);
@@ -307,6 +311,7 @@ const PaintFrame = () => {
                 ctx.lineTo(offsetX, offsetY);
                 ctx.stroke();
                 if (socketRef.current) {
+                    {/* @ts-ignore */}
                     socketRef.current.emit("drawing",
                         {
                             offsetX,
