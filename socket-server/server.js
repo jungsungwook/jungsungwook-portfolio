@@ -26,13 +26,13 @@ const handle = app.getRequestHandler();
 
 //socket
 const socketapp = require('express')();
-const privateKey = require('fs').readFileSync(process.env.PRIVATE_KEY, 'utf8');
-const certificate = require('fs').readFileSync(process.env.CERTIFICATE, 'utf8');
-const credentials = {
+const privateKey = prod ? require('fs').readFileSync(process.env.PRIVATE_KEY, 'utf8') : null;
+const certificate = prod ? require('fs').readFileSync(process.env.CERTIFICATE, 'utf8') : null;
+const credentials = prod ? {
     key: privateKey,
     cert: certificate
-};
-const socketserver = require('https').createServer(credentials ,socketapp)
+} : null;
+const socketserver = prod ? require('https').createServer(credentials ,socketapp) : require('http').createServer(socketapp);
 const cors = require('cors');
 socketapp.use(cors());
 const ports = {
