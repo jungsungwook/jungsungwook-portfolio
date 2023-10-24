@@ -25,7 +25,13 @@ const handle = app.getRequestHandler();
 
 //socket
 const socketapp = require('express')();
-const socketserver = require('https').createServer(socketapp)
+const privateKey = require('fs').readFileSync(process.env.PRIVATE_KEY, 'utf8');
+const certificate = require('fs').readFileSync(process.env.CERTIFICATE, 'utf8');
+const credentials = {
+    key: privateKey,
+    cert: certificate
+};
+const socketserver = require('https').createServer(credentials ,socketapp)
 const cors = require('cors');
 socketapp.use(cors());
 const ports = {
