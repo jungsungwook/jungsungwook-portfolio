@@ -8,6 +8,6 @@ export default async function handler(
 ) {
     const db = await new DbHandler().getDatabase();
     const result = await db.all('INSERT INTO user (name, email, password) VALUES (?, ?, ?)', ['test', 'test', 'test']);
-    console.log(result);
+
     res.status(200).json({ name: 'John Doe' })
 }

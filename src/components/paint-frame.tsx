@@ -43,6 +43,8 @@ const PaintFrame = () => {
         // 소켓 통신 연결
         {/* @ts-ignore */}
         const socket = SocketIoClient.connect(`${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_Socket_Port}`,{
+            secure: true,
+            rejectUnauthorized: false,
         });
         socket.on("connect", () => {
             socketRef.current = socket;

@@ -29,7 +29,6 @@ const MainFrame = (props: MainFrameProps) => {
     const loadPage = (page: number) => {
         // 페이지를 로드합니다.
         // 페이지를 로드할 때 슬라이드 애니메이션을 적용합니다.
-        console.log(page)
     }
 
     useEffect(() => {
