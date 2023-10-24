@@ -10,7 +10,7 @@ const Document = () => {
         <meta property="og:url" content="https://sungwook.net/" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://avatars.githubusercontent.com/u/20926860?v=4" />
-        <meta property="og:description" content="공유기능 | 열심히 코드를 공부합시다." />
+        <meta property="og:description" content="SungWook's Portfolio Page." />
         <title>정성욱의 포트폴리오 웹사이트</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
