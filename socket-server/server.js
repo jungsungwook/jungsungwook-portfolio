@@ -10,10 +10,11 @@ const {
 
 const initialize = require('./initialize');
 
+dotenv.config();
+
 const dev = process.env.NODE_ENV !== 'production';
 const prod = process.env.NODE_ENV === 'production';
 
-dotenv.config();
 
 console.log(dev ? `Running on development mode` : `Running on production mode`)
 
