@@ -7,7 +7,7 @@ import MainFrame from "@/components/main-frame";
 import Head from "next/head";
 
 const HomeIndex = () => {
-    const [isLogin, setIsLoginState] = useRecoilState(isLoginState);
+    // const [isLogin, setIsLoginState] = useRecoilState(isLoginState);
 
     return (
         <>
