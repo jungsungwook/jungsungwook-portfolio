@@ -15,6 +15,33 @@
     --box-shadow-S-03f: 0 5px 15px rgba(0, 50, 255, 0.75);
 }
 
+.fwujmm::-webkit-scrollbar {
+    width: 0.8em !important;
+}
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.tooltip {
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    max-width: 100%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+
+.show-more {
+    font-size: 1.5rem !important;
+}
+
 .footer__center {
     position: fixed;
     z-index: 100;
@@ -23,7 +50,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color : #000;
+    color: #000;
     padding-bottom: 10px;
 }
 
@@ -37,7 +64,7 @@
     right: 0;
     text-align: center;
     line-height: .475;
-    font-family: Oswald, monospace;
+    font-family: Oswald, monospace ,'SUITE-Regular';
 }
 
 #app {
@@ -48,7 +75,7 @@
 body,
 html {
     line-height: 1;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif, 'SUITE-Regular';
     font-weight: 400;
     margin-bottom: 0 !important;
 }
@@ -630,7 +657,7 @@ html {
 
 body {
     font-size: 1.6rem;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Source Sans Pro", sans-serif, "SUITE-Regular";
     color: #383838;
     background-color: #f8f8f8;
 }
@@ -640,6 +667,12 @@ a {
     text-decoration: none;
 }
 
+.experience-content {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 7px;
+}
 
 .swiper-container.timelines-content {
     width: 100%;
@@ -830,7 +863,7 @@ a {
     row-gap: 5px;
 }
 
-.formField input{
+.formField input {
     width: 100%;
     height: 25px;
     border-radius: 10px;
