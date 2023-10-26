@@ -1,4 +1,14 @@
 const ProfilePage = () => {
+    const age = () => {
+        const today = new Date();
+        const birthDay = new Date(1998, 7, 31);
+        const age = today.getFullYear() - birthDay.getFullYear();
+        const month = today.getMonth() - birthDay.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthDay.getDate())) {
+            return age - 1;
+        }
+        return age;
+    }
     return (
             <div style={{
                 // 수직 정렬
@@ -55,7 +65,12 @@ const ProfilePage = () => {
                                     , color: "#999",
                                 }}> | </span>
                                 1998년
-                                (만 24세)
+                                <span style={{
+                                    fontSize: "20px"
+                                    // 연한 회색
+                                    , color: "#999",
+                                }}> | </span>
+                                (만 {age()}세)
                             </span>
                         </div>
                         <div className="profile-email">
