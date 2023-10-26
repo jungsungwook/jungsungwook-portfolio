@@ -7,6 +7,7 @@ const SubmitPage = () => {
         <>
             <div className="swiper-slide" style={{
                 position: "fixed",
+                fontFamily: "SUITE-Regular",
             }}>
                 <span style={{
                     color: "black",
