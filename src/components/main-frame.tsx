@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import IndexPage from '@/pages/page/indexPage';
 import ProfilePage from '@/pages/page/profilePage';
-import CareerPage from '@/pages/page/careerPage';
+import TimelinePage from '@/pages/page/timelinePage';
 import PortfolioPage from '@/pages/page/portfolioPage';
 import SubmitPage from '@/pages/page/submitPage';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/pagination";
 import { Mousewheel, Pagination } from "swiper";
 import AboutPage from '@/pages/page/aboutPage';
+import { useRecoilState } from 'recoil';
+import { enableScrollState } from '@/states/enableScroll';
+import { set } from 'animejs';
 /**
  * MainFrame은 페이지의 메인 프레임을 구성하는 컴포넌트입니다.
  * @feature
@@ -25,16 +28,17 @@ class MainFrameProps {
 const MainFrame = (props: MainFrameProps) => {
     // 현재 페이지의 인덱스
     const [currentPage, setCurrentPage] = React.useState(props.page);
-
-    const loadPage = (page: number) => {
-        // 페이지를 로드합니다.
-        // 페이지를 로드할 때 슬라이드 애니메이션을 적용합니다.
-    }
+    const [swiperObj, setSwiperObj] = React.useState<any>();
+    const [enableScroll, setEnableScroll] = useRecoilState(enableScrollState);
 
     useEffect(() => {
-        // 페이지가 변경되면 페이지를 로드합니다.
-        loadPage(currentPage as number);
-    }, [currentPage]);
+        swiperObj?.mousewheel.enable();
+    }, [enableScroll])
+
+    useEffect(() => {
+        
+    }, []);
+
     return (
         <>
             <Swiper
@@ -49,7 +53,14 @@ const MainFrame = (props: MainFrameProps) => {
                 }
                 modules={[Mousewheel, Pagination]}
                 onSlideChange={(swiper) => {
+                    if (swiperObj == undefined) setSwiperObj(swiper);
                     setCurrentPage(swiper.activeIndex);
+                    if (swiper.activeIndex == 2) {
+                        swiper.mousewheel.disable();
+                    } else {
+                        setEnableScroll(true);
+                        swiper.mousewheel.enable();
+                    }
                 }}
                 className="main_swiper"
             >
@@ -112,12 +123,12 @@ const MainFrame = (props: MainFrameProps) => {
                     </ul>
                 </div>
                 <SwiperSlide
-                    style ={{
+                    style={{
                         backgroundColor: "#f8f8f8",
                     }}
                 ><IndexPage /></SwiperSlide>
                 <SwiperSlide
-                    style ={{
+                    style={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
@@ -126,14 +137,14 @@ const MainFrame = (props: MainFrameProps) => {
                     }}
                 ><AboutPage /></SwiperSlide>
                 <SwiperSlide
-                    style ={{
+                    style={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         backgroundColor: "#f8f8f8",
                         overflow: "visible"
                     }}
-                ><CareerPage /></SwiperSlide>
+                ><TimelinePage /></SwiperSlide>
                 <SwiperSlide><PortfolioPage /></SwiperSlide>
                 <SwiperSlide><SubmitPage /></SwiperSlide>
             </Swiper >
