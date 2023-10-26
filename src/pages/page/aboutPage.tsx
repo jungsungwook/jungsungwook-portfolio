@@ -4,6 +4,8 @@ import 'swiper/css/effect-cards';
 import { Mousewheel, Pagination, Navigation, Parallax, EffectCards } from "swiper";
 import ProfilePage from "./profilePage";
 import SkillPage from "./skillPage";
+import CareerPage from "./careerPage";
+import ExperiencePage from "./experiencePage";
 
 const AboutPage = () => {
     return (
@@ -14,6 +16,7 @@ const AboutPage = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 // backgroundColor: "red",
+                fontFamily: "SUITE-Regular"
             }}
         >
             <div className="card-swiper-slide">
@@ -54,7 +57,16 @@ const AboutPage = () => {
                             border: "1px solid black",
                         }}
                     >
-                        커리어 C
+                        <ExperiencePage />
+                    </SwiperSlide>
+                    <SwiperSlide
+                        className="swiper-card"
+                        style={{
+                            backgroundColor: "white",
+                            border: "1px solid black",
+                        }}
+                    >
+                        <CareerPage />
                     </SwiperSlide>
                 </Swiper>
             </div >
@@ -83,7 +95,7 @@ const AboutPage = () => {
                     transform: "translate(50%, -50%)",
                 }}
             >
-                <p>카드를 마우스로 넘겨보세요.</p><p/>
+                <p>카드를 마우스로 넘겨보세요.</p><p />
             </div>
         </div>
     );
