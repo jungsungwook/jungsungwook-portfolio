@@ -7,6 +7,7 @@ const Document = () => {
     <Html lang="en">
       {/* <Head /> */}
       <Head>
+        <link rel="icon" href="/tap_icon.png" />
         <meta property="og:url" content="https://sungwook.net/" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://avatars.githubusercontent.com/u/20926860?v=4" />
