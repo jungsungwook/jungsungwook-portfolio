@@ -6,6 +6,7 @@ import ProfilePage from "./profilePage";
 import SkillPage from "./skillPage";
 import CareerPage from "./careerPage";
 import ExperiencePage from "./experiencePage";
+import AwardPage from "./awardPage";
 
 const AboutPage = () => {
     return (
@@ -58,6 +59,15 @@ const AboutPage = () => {
                         }}
                     >
                         <ExperiencePage />
+                    </SwiperSlide>
+                    <SwiperSlide
+                        className="swiper-card"
+                        style={{
+                            backgroundColor: "white",
+                            border: "1px solid black",
+                        }}
+                    >
+                        <AwardPage />
                     </SwiperSlide>
                     <SwiperSlide
                         className="swiper-card"
