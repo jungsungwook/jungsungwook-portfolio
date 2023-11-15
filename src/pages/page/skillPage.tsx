@@ -3,11 +3,13 @@ import { useState } from "react";
 const SkillPage = () => {
     const [showTooltip, setShowTooltip] = useState(false);
     const [tooltipText, setTooltipText] = useState("");
+    const [tooltipContents, setTooltipContents] = useState("");
 
-    const handleMouseEnter = (titleName: string) => {
+    const handleMouseEnter = (titleName: string, tooltipContents?: string) => {
         setShowTooltip(true);
         // 툴팁 텍스트는 해당 div 안에 title 속성으로 저장되어 있음
         setTooltipText(titleName);
+        setTooltipContents(tooltipContents as string);
     };
 
     const handleMouseLeave = () => {
@@ -20,11 +22,24 @@ const SkillPage = () => {
             flexDirection: "column",
         }}>
             {showTooltip && (
-                <div
-                    className="tooltip"
-                >
-                    {tooltipText}
-                </div>
+                <>
+                    <div
+                        className="tooltip"
+                    >
+                        <div>
+                            {tooltipText}
+                        </div>
+                        <br />
+                        <div
+                            className="tooltip-content"
+                            style={{
+                                fontSize: "16px",
+                            }}
+                            dangerouslySetInnerHTML={{ __html: tooltipContents }}
+                        />
+
+                    </div>
+                </>
             )}
             <div className="profile-skill"
                 style={{
@@ -94,7 +109,7 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("JavaScript")}
+                                onMouseEnter={() => handleMouseEnter("JavaScript(수준: 중상)", "알고리즘 문제 풀이 및 Node.js와 Express를 이용하여 서버를 구축하고 RESTful API를 자유롭게 구현 가능.")}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>JavaScript</title><path
@@ -107,7 +122,13 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("TypeScript")}
+                                onMouseEnter={() => handleMouseEnter("TypeScript(수준: 중상)", `
+                                <li>- 상세한 CRUD 기능 API 개발 및 WebSocket 통신 구현</li>
+                                <li>- Decorator 와 Interceptor을 통한 다양한 디자인 패턴 구현</li>
+                                <li>- JWT, OAuth 등 다양한 보안 인증 구현</li>
+                                <li>- 모듈화와 의존성 주입을 통한 애플리케이션 구조화</li>
+                                <li>- 데이터베이스 연동과 ORM 사용 및 자체 ORM 구현</li>
+                                <li>- 트랜잭션을 통한 예외 처리 구현</li>`)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>TypeScript</title><path
@@ -120,7 +141,12 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("Python")}
+                                onMouseEnter={() => handleMouseEnter("Python(수준: 중)", `
+                                <li>- LSTM 아키텍쳐를 활용하여 자연어 처리와 인공지능 모델을 이용한 프로젝트 개발 경험</li>
+                                <li>- TensorFlow, Keras, OpenCV 등 다양한 라이브러리를 이용해 구현하고자 하는 기능을 프로토 타이핑 및 구현 가능</li>
+                                <li>- 데이터바우처 국가사업 진행 경험</li>
+                                <li>- 국립 국어원 말뭉치 사업 관련 수주사 외주 개발 ( AI학습 데이터 수집 및 가공 )</li>`
+                                )}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Python</title><path
@@ -133,7 +159,10 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("C#")}
+                                onMouseEnter={() => handleMouseEnter("C#(수준: 중하)", `
+                                <li>- OOD를 이해하고 OOP 프로그래밍을 통한 유지보수가 원활한 코드 작성 능력</li>
+                                <li>- Unity 엔진을 이용한 2D 및 3D 게임 개발 및 배포 경험</li>
+                                `)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>C Sharp</title><path
@@ -183,7 +212,13 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("NestJS")}
+                                onMouseEnter={() => handleMouseEnter("NestJS(수준: 중상)", `
+                                <li>- 상세한 CRUD 기능 API 개발 및 WebSocket 통신 구현</li>
+                                <li>- Decorator 와 Interceptor을 이용하고, 다양한 디자인 패턴 구현</li>
+                                <li>- JWT, OAuth 등 다양한 보안 인증 구현</li>
+                                <li>- 모듈화와 의존성 주입을 통한 애플리케이션 구조화</li>
+                                <li>- 데이터베이스 연동과 ORM 사용 및 자체 ORM 구현</li>
+                                <li>- 트랜잭션을 통한 예외 처리 구현</li>`)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>NestJS</title><path
@@ -195,7 +230,12 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("Next.js")}
+                                onMouseEnter={() => handleMouseEnter("Next.js(수준: 중하)", `
+                                <li>- React를 사용한 컴포넌트 기반 설계 및 개발</li>
+                                <li>- 커스텀 express 서버와 연계하여 HTTP통신 및 소켓통신 처리 구현</li>
+                                <li>- Redux를 이용한 전역 상태 관리</li>
+                                <li>- 해당 사이트도 NextJS를 이용하여 개발함</li>
+                                `)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Next.js</title><path
@@ -208,7 +248,11 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("Node.js")}
+                                onMouseEnter={() => handleMouseEnter("Node.js(수준: 중상)", `
+                                <li>- Npm을 이용하여 프로젝트의 의존성을 관리하고 라이브러리 충돌을 최소화 할 수 있음</li>
+                                <li>- Node 환경에서 다양한 웹 프레임워크를 이용하여 RESTful API 설계 및 서버 로직 개발 경험</li>
+                                <li>- Koa, Express, Oak 등 Node.js 생태계 환경에서 제공되는 프레임워크와 라이브러리를 이용하여 다양한 시도를 해봄</li>
+                                `)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Node.js</title><path
@@ -221,7 +265,9 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("Express")}
+                                onMouseEnter={() => handleMouseEnter("Express(수준: 하)", `
+                                <li>기본적인 CRUD 기능 API 개발 및 WebSocket 통신 구현</li>
+                                `)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Express</title><path
@@ -233,7 +279,11 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("Spring")}
+                                onMouseEnter={() => handleMouseEnter("Spring(수준: 하)", `
+                                <li>- Model-View-Controller 패턴을 기반으로 한 웹 애플리케이션의 개발 및 구현 경험</li>
+                                <li>- MyBatis를 사용하여 SQL 쿼리를 수행하는 매퍼 인터페이스를 정의하고 XML 파일에 매핑하여 개발</li>
+                                <li>- OK캐시백 서비스 개발 및 테스트, 배포를 Jenkins와 활용하여 진행</li>
+                                `)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Spring</title><path
@@ -246,7 +296,12 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("Unity")}
+                                onMouseEnter={() => handleMouseEnter("Unity(수준: 중)",`
+                                <li>- 광학에서의 Depth of Field를 유니티에서 쉐이더를 이용하여 Computer Graphics로 구현</li>
+                                <li>- 오브젝트 풀링, 싱글톤 패턴, MVC패턴을 이용하고 객체지향적으로 개발 경험</li>
+                                <li>- 다양한 장르의 게임 개발 및 배포 경험</li>
+                                <li>- 학술대회 및 공모전시회 출품 후 수상 경험 다수</li>
+                                `)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Unity</title><path
@@ -410,7 +465,10 @@ const SkillPage = () => {
                                     width: "25px",
                                     height: "25px",
                                 }}
-                                onMouseEnter={() => handleMouseEnter("Jenkins")}
+                                onMouseEnter={() => handleMouseEnter("Jenkins",`
+                                <li>- NestJS, Nextjs, Spring 등 다양한 서버 및 클라이언트 어플리케이션을 관리할 수 있도록 라즈베리파이PC에 설치 후 Git Hook과 연계하여 CI/CD 자동화 경험</li>
+                                <li>- 사이드 프로젝트 및 실제 배포 서비스에서 다양하게 사용 중</li>
+                                `)}
                                 onMouseLeave={handleMouseLeave}
                             >
                                 <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Jenkins</title><path
