@@ -42,3 +42,5 @@ database/database.sqlite
 
 test.png
 socket-server/test.png
+
+database/database.sqlite

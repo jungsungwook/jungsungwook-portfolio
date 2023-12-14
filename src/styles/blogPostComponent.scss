@@ -22,9 +22,9 @@
     flex-direction: column;
     justify-content: space-between;
     transition: width 1s, height 1s, box-shadow 1s;
-    cursor: pointer;
 
     .card-body-img {
+        cursor: pointer;
         width: 100%;
         height: 60%;
 
@@ -39,6 +39,7 @@
     }
 
     .card-body-text {
+        cursor: pointer;
         flex-grow: 1;
         word-break: break-all;
         overflow: auto;
@@ -66,5 +67,15 @@
         color: #282c34;
         font-size: 1.1rem;
         justify-content: space-between;
+
+        .card-footer-tag::-webkit-scrollbar {
+            width: 1vw;
+            height: 0.5vw;
+        }
+
+        .card-footer-tag::-webkit-scrollbar-thumb {
+            background-color: hsla(0, 0%, 42%, 0.49);
+            border-radius: 100px;
+        }
     }
 }

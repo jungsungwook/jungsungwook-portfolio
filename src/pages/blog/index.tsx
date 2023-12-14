@@ -105,7 +105,6 @@ const BlogIndex = () => {
 
     const loadTagList = async () => {
         const url = getApiUrl("/blog/tag-list");
-        console.log(url)
         const method: Method = "GET";
         const response = await axios({
             url,
@@ -183,6 +182,7 @@ const BlogIndex = () => {
                                         created_at: b.createdAt,
                                         updated_at: b.updatedAt,
                                         img_url: b.thumbnail,
+                                        tags: b.tags,
                                     });
                                 })
                         }

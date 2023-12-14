@@ -11,6 +11,7 @@ const BlogPostComponent = ({
     created_at,
     updated_at,
     user_id,
+    tags,
 }: any) => {
     const rotuer = useRouter();
     if (thumbnamil == null) thumbnamil = "/no-image.png"
@@ -30,8 +31,31 @@ const BlogPostComponent = ({
                 <div className="card-body-text-content">{content}</div>
             </div>
 
-            <div className="card-footer">
-                <div className="username">{user_id}</div>
+            <div
+                onClick={(e) => {
+                    e.stopPropagation();
+                }}
+                className="card-footer">
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "0.5rem",
+                        overflow: "overlay",
+                        pointerEvents: "none",
+                    }} className="card-footer-tag">
+                    {
+                        tags.map((tag: any, index: number) => {
+                            return (
+                                <div key={index} style={{
+                                    borderRadius: "5px",
+                                    backgroundColor: "#e5e5e5",
+                                    border: "2px solid #e5e5e5",
+                                }} className="tag">{tag}</div>
+                            );
+                        })
+                    }
+                </div>
                 <div className="create-date">{timeConvertUtcToKst(created_at)}</div>
             </div>
         </div>
