@@ -113,7 +113,7 @@ const AwardPage = () => {
                                 }}>| 우수상</span> <span style={{
                                     fontSize: "14px",
                                     color: "#2E9AFE",
-                                }} onClick={()=>{ alert("hi") }}>[ 자세히 보기 ]</span>
+                                }} onClick={() => { window.open("/project/1", "_blank") }}>[ 자세히 보기 ]</span>
                             </span>
                             <span className="en"
                                 style={{
@@ -126,7 +126,7 @@ const AwardPage = () => {
                                 }}>| 우수상</span> <span style={{
                                     fontSize: "14px",
                                     color: "#2E9AFE",
-                                }} onClick={()=>{ alert("hi") }}>[ 자세히 보기 ]</span>
+                                }} onClick={() => { window.open("/project/1", "_blank") }}>[ 자세히 보기 ]</span>
                             </span>
                         </div>
                     </div>
@@ -169,7 +169,7 @@ const AwardPage = () => {
                                 }}>| 우수상</span> <span style={{
                                     fontSize: "14px",
                                     color: "#2E9AFE",
-                                }} onClick={()=>{ alert("hi") }}>[ 자세히 보기 ]</span>
+                                }} onClick={() => { window.open("/project/1", "_blank") }}>[ 자세히 보기 ]</span>
                             </span>
                         </div>
                     </div>
@@ -212,7 +212,7 @@ const AwardPage = () => {
                                 }}>| 최우수상</span> <span style={{
                                     fontSize: "14px",
                                     color: "#2E9AFE",
-                                }} onClick={()=>{ alert("hi") }}>[ 자세히 보기 ]</span>
+                                }} onClick={() => { window.open("/project/1", "_blank") }}>[ 자세히 보기 ]</span>
                             </span>
                             <span className="en"
                                 style={{
@@ -225,7 +225,7 @@ const AwardPage = () => {
                                 }}>| 최우수상</span> <span style={{
                                     fontSize: "14px",
                                     color: "#2E9AFE",
-                                }} onClick={()=>{ alert("hi") }}>[ 자세히 보기 ]</span>
+                                }} onClick={() => { window.open("/project/1", "_blank") }}>[ 자세히 보기 ]</span>
                             </span>
                         </div>
                     </div>

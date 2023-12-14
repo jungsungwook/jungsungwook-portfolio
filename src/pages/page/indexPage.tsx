@@ -9,6 +9,18 @@ const IndexPage = () => {
     const el2 = useRef(null);
     const el3 = useRef(null);
     useEffect(() => {
+        // 만약 모바일일 경우 알럿을 띄워준다.
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            alert("모바일에서는 정상적으로 작동하지 않습니다. PC로 접속해주세요.");
+        }else {
+            if (typeof window !== "undefined") {
+                if (window.innerWidth < 768) {
+                    alert("화면 크기가 너무 작습니다. PC로 접속해주세요.");
+                }
+            }
+        }
+        
         const typed = new Typed(el.current, {
             strings: ["Hi, there.^500 I'm <strong>Sung Wook.</strong>^800 I'm a <strong>Back-end Developer.</strong>^500"],
             typeSpeed: 50,

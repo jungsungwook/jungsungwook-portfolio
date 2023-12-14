@@ -12,14 +12,15 @@ const items = [
     {
         title: "2016",
         cardTitle: "2016 (19살)",
-        cardDetailedText: <div>
+        cardDetailedText: <div style={{
+            paddingBottom: '10rem',
+        }}>
             <div className="timeline-description">
-                <span className="td-title">- 제27회 전국 ICT창의성대회 동상 수상</span>
+                <span className="td-title">처음으로 프로그래밍을 접하게 되고 C, JAVA와 알고리즘을 공부하게 되었습니다.</span>
                 <span className="td-description"></span>
             </div>
             <div className="timeline-description">
-                <span className="td-title">- 국민대학교 제1회 전국 알고리즘 경진대회 본선 합격</span>
-                <span className="td-description"></span>
+                <span className="td-description">- 국민대학교 제1회 전국 알고리즘 경진대회 본선 진출</span>
             </div>
             <div className="timeline-description">
                 <span className="td-title">- 정보처리기능사 및 OCJP 취득</span>
@@ -36,7 +37,7 @@ const items = [
         cardTitle: "2017 (20살)",
         cardDetailedText: <div>
             <div className="timeline-description">
-                <span className="td-title">- 강남대학교 소프트웨어응용학부 입학</span>
+                <span className="td-title">처음으로</span>
                 <span className="td-description"></span>
             </div>
             <div className="timeline-description">
@@ -60,8 +61,7 @@ const items = [
             </div>
             <div className="timeline-description">
                 <span className="td-title">- 강남대학교 소프트웨어응용학부 제1회 가상현실 컨텐츠 개발전시회 기획 및 운영총괄</span><br />
-                <span className="td-description">동아리 내 팀원들을 모아 개발팀들을 만들고 여러 게임들을 개발한 뒤 학부의 지원을 통해 전교생을 참여 대상으로</span><br />
-                <span className="td-description">교내 전시회를 주최하였으며 운영 및 개발팀 멘토를 담당하였습니다.</span>
+                <span className="td-description">동아리 내 팀원들을 모아 개발팀들을 만들고 여러 게임들을 개발한 뒤 학부의 지원을 통해 전교생을 참여 대상으로 교내 전시회를 주최하였으며 운영 및 개발팀 멘토를 담당하였습니다.</span>
             </div>
             <div className="timeline-description">
                 <span className="td-title">- 강남대학교 Wel-Tech 사업부 IOT 개발팀장</span><br />

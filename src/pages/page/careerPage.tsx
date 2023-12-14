@@ -30,7 +30,7 @@ const CareerPage = () => {
                             fontWeight: "bold",
                         }}
                     >
-                        Career
+                        Career <span style={{ fontSize: "12px", color: "#A3A3A3", fontWeight: "normal" }}>(프로젝트 명 클릭 시 상세 페이지 이동)</span>
                     </span>
                 </div>
                 <hr style={{
@@ -202,7 +202,7 @@ const CareerPage = () => {
                                 gap: "10px",
                                 lineHeight: "1.2",
                             }}
-                        >프로젝트 :
+                        >프로젝트 : <a href="/project/1" target="_blank" rel="noreferrer">데이터바우처 사업</a>, <a href="/project/2" target="_blank" rel="noreferrer">Class Q</a>
                         </span>
                     </div>
                     <hr style={{
@@ -352,7 +352,7 @@ const CareerPage = () => {
                                 gap: "10px",
                                 lineHeight: "1.2",
                             }}
-                        >프로젝트 :
+                        >프로젝트 : <a href="/project/1" target="_blank" rel="noreferrer">OK캐시백</a>
                         </span>
                     </div>
                     <hr style={{
@@ -494,7 +494,7 @@ const CareerPage = () => {
                                 gap: "10px",
                                 lineHeight: "1.2",
                             }}
-                        >프로젝트 :
+                        >프로젝트 : -
                         </span>
                     </div>
                 </div>

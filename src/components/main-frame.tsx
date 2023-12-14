@@ -10,8 +10,9 @@ import "swiper/css/pagination";
 import { Mousewheel, Pagination } from "swiper";
 import AboutPage from '@/pages/page/aboutPage';
 import { useRecoilState } from 'recoil';
-import { enableScrollState } from '@/states/enableScroll';
+// import { enableScrollState } from '@/states/enableScroll';
 import { set } from 'animejs';
+import ProjectIndex from '@/pages/project';
 /**
  * MainFrame은 페이지의 메인 프레임을 구성하는 컴포넌트입니다.
  * @feature
@@ -29,11 +30,11 @@ const MainFrame = (props: MainFrameProps) => {
     // 현재 페이지의 인덱스
     const [currentPage, setCurrentPage] = React.useState(props.page);
     const [swiperObj, setSwiperObj] = React.useState<any>();
-    const [enableScroll, setEnableScroll] = useRecoilState(enableScrollState);
+    // const [enableScroll, setEnableScroll] = useRecoilState(enableScrollState);
 
-    useEffect(() => {
-        swiperObj?.mousewheel.enable();
-    }, [enableScroll])
+    // useEffect(() => {
+    //     swiperObj?.mousewheel.enable();
+    // }, [enableScroll])
 
     useEffect(() => {
         
@@ -53,14 +54,14 @@ const MainFrame = (props: MainFrameProps) => {
                 }
                 modules={[Mousewheel, Pagination]}
                 onSlideChange={(swiper) => {
-                    if (swiperObj == undefined) setSwiperObj(swiper);
-                    setCurrentPage(swiper.activeIndex);
-                    if (swiper.activeIndex == 2) {
-                        swiper.mousewheel.disable();
-                    } else {
-                        setEnableScroll(true);
-                        swiper.mousewheel.enable();
-                    }
+                    // if (swiperObj == undefined) setSwiperObj(swiper);
+                    // setCurrentPage(swiper.activeIndex);
+                    // if (swiper.activeIndex == 2) {
+                    //     swiper.mousewheel.disable();
+                    // } else {
+                    //     setEnableScroll(true);
+                    //     swiper.mousewheel.enable();
+                    // }
                 }}
                 className="main_swiper"
             >
@@ -136,7 +137,7 @@ const MainFrame = (props: MainFrameProps) => {
                         overflow: "visible"
                     }}
                 ><AboutPage /></SwiperSlide>
-                <SwiperSlide
+                {/* <SwiperSlide
                     style={{
                         display: "flex",
                         justifyContent: "center",
@@ -144,8 +145,9 @@ const MainFrame = (props: MainFrameProps) => {
                         backgroundColor: "#f8f8f8",
                         overflow: "visible"
                     }}
-                ><TimelinePage /></SwiperSlide>
-                <SwiperSlide><PortfolioPage /></SwiperSlide>
+                ><TimelinePage /></SwiperSlide> */}
+                {/* <SwiperSlide><PortfolioPage /></SwiperSlide> */}
+                <SwiperSlide><ProjectIndex></ProjectIndex></SwiperSlide>
                 <SwiperSlide><SubmitPage /></SwiperSlide>
             </Swiper >
         </>
