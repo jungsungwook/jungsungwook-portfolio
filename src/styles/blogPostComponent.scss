@@ -1,10 +1,10 @@
 @media all and (min-width: 10px) {
     .card-wrapper {
-        width: 200px;
+        width: 29%;
         height: 300px;
 
         &:hover {
-            width: 210px;
+            width: 30%;
             height: 310px;
             box-shadow: rgba(0, 0, 0, 0.9) 0px 11px 35px 2px;
         }
@@ -13,7 +13,7 @@
 
 .card-wrapper {
     flex-shrink: 0;
-    margin: 15px;
+    margin: 2%;
     font-family: 'Noto Sans KR', sans-serif;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;

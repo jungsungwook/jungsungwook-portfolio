@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import BlogPostComponent from "./components/blogPostComponents";
+import { getApiUrl } from "@/utils/getApiUrl";
 
 const BlogIndex = () => {
     const [selectTag, setSelectTag] = useState<string>("전체 보기");
@@ -19,6 +20,7 @@ const BlogIndex = () => {
         tags: string[],
         createdAt: string,
         updatedAt: string,
+        thumbnail: string,
     }>>([]);
 
     useEffect(() => {
@@ -42,9 +44,7 @@ const BlogIndex = () => {
             setTagList(tagList);
         };
         const getBlogList = async () => {
-            const url = process.env.NODE_ENV === "development" ?
-            `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_React_Port}/api/blog` :
-            `${process.env.NEXT_PUBLIC_API_URL}/api/blog`;
+            const url = getApiUrl("/blog");
             
             const method: Method = "GET";
             const response = await axios({
@@ -104,7 +104,8 @@ const BlogIndex = () => {
     }, [selectTag]);
 
     const loadTagList = async () => {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_React_Port}/api/blog/tag-list`;
+        const url = getApiUrl("/blog/tag-list");
+        console.log(url)
         const method: Method = "GET";
         const response = await axios({
             url,
@@ -168,6 +169,7 @@ const BlogIndex = () => {
                         justifyContent: "flex-start",
                         alignItems: "center",
                         flex: "70%",
+                        paddingLeft: "0.5%",
                     }}>
                         {
                             blog.length === 0 ?
@@ -180,7 +182,7 @@ const BlogIndex = () => {
                                         content: b.content,
                                         created_at: b.createdAt,
                                         updated_at: b.updatedAt,
-                                        img_url: "https://i.memeki.kr/thumbnail_default_memeki_dhXLIYkxPA.png",
+                                        img_url: b.thumbnail,
                                     });
                                 })
                         }

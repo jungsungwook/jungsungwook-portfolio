@@ -1,27 +1,29 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { timeConvertUtcToKst } from '@/utils/timezoneConvet';
 
 const BlogPostComponent = ({
     card_type,
     item_id,
     title,
     content,
-    img_url,
+    thumbnamil,
     created_at,
     updated_at,
     user_id,
-}:any) => {
+}: any) => {
     const rotuer = useRouter();
+    if (thumbnamil == null) thumbnamil = "/no-image.png"
 
     return (
         <div key={item_id} className="card-wrapper" onClick={() => {
             rotuer.push(`/${card_type}/${item_id}`)
         }}>
             {
-                img_url != null && img_url != "" && img_url != "null" && img_url != "undefined" && img_url != undefined ?
-                <div className="card-body-img">
-                    <img src={img_url}/>
-                </div> : <></>
+                thumbnamil != null && thumbnamil != "" && thumbnamil != "null" && thumbnamil != "undefined" && thumbnamil != undefined ?
+                    <div className="card-body-img">
+                        <img src={thumbnamil} />
+                    </div> : <></>
             }
             <div className="card-body-text">
                 <div className="card-body-text-title">{title}</div>
@@ -29,10 +31,10 @@ const BlogPostComponent = ({
             </div>
 
             <div className="card-footer">
-            <div className="username">{user_id}</div>
-            <div className="create-date">{created_at}</div>
+                <div className="username">{user_id}</div>
+                <div className="create-date">{timeConvertUtcToKst(created_at)}</div>
+            </div>
         </div>
-    </div>
     );
 };
 
