@@ -42,6 +42,7 @@ const BlogPostComponent = ({
                         flexDirection: "row",
                         gap: "0.5rem",
                         overflow: "overlay",
+                        userSelect: "none",
                     }} className="card-footer-tag">
                     {
                         tags.map((tag: any, index: number) => {
@@ -55,7 +56,12 @@ const BlogPostComponent = ({
                         })
                     }
                 </div>
-                <div className="create-date">{timeConvertUtcToKst(created_at)}</div>
+                <div
+                    style={{
+                        // 오른쪽으로 텍스트 정렬
+                        textAlign: "right",
+                    }}
+                    className="create-date">{timeConvertUtcToKst(created_at)}</div>
             </div>
         </div>
     );
