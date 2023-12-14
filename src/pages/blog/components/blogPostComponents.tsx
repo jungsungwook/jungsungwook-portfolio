@@ -42,7 +42,6 @@ const BlogPostComponent = ({
                         flexDirection: "row",
                         gap: "0.5rem",
                         overflow: "overlay",
-                        pointerEvents: "none",
                     }} className="card-footer-tag">
                     {
                         tags.map((tag: any, index: number) => {
