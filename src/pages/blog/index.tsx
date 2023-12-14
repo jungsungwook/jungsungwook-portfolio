@@ -42,7 +42,10 @@ const BlogIndex = () => {
             setTagList(tagList);
         };
         const getBlogList = async () => {
-            const url = `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_React_Port}/api/blog`;
+            const url = process.env.NODE_ENV === "development" ?
+            `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_React_Port}/api/blog` :
+            `${process.env.NEXT_PUBLIC_API_URL}/api/blog`;
+            
             const method: Method = "GET";
             const response = await axios({
                 url,
