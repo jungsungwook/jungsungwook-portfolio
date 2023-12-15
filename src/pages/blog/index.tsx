@@ -169,6 +169,7 @@ const BlogIndex = () => {
                         alignItems: "center",
                         flex: "70%",
                         paddingLeft: "0.5%",
+                        marginBottom: "5rem",
                     }}>
                         {
                             blog.length === 0 ?
