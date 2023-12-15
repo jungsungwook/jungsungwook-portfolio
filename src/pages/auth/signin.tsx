@@ -30,10 +30,11 @@ const SignIn = () => {
           },
         });
         const result = res.data;
+        console.log(result)
         localStorage.setItem('isLogin', 'true')
         setCookie('token', result.token, {
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-          httpOnly: true,
+          // httpOnly: true,
           secure: true,
           sameSite: 'strict',
           path: '/',

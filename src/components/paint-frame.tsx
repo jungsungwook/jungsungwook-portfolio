@@ -205,6 +205,7 @@ const PaintFrame = () => {
             }
 
             const backgroundCanvas = document.getElementById("background") as HTMLCanvasElement;
+            if(!backgroundCanvas) return;
             const image = new Image();
             image.src = "background.png";
             const backctx = backgroundCanvas.getContext("2d") as CanvasRenderingContext2D;

@@ -4,15 +4,18 @@ import DbHandler from '@/database/dbHandler';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const db = await new DbHandler().getDatabase();
-    const token = req.headers.authorization?.split(' ')[1];
+    let token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-        res.status(401).json({ message: 'Unauthorized' });
+        token = req.cookies.token;
+    }
+    if (!token) {
+        res.status(401).json({ statusCode: 401, content: 'Unauthorized' });
         return;
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-        res.status(200).json({ message: 'Authorized' });
+        res.status(200).json({ statusCode:200, content: 'Authorized' });
     } catch (e) {
-        res.status(401).json({ message: 'Unauthorized' });
+        res.status(401).json({ statusCode:200, content: 'Unauthorized' });
     }
 }

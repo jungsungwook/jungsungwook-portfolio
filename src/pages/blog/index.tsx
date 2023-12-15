@@ -24,6 +24,27 @@ const BlogIndex = () => {
     }>>([]);
 
     useEffect(() => {
+        const header = document.querySelector(".main_header") as HTMLDivElement;
+        if (!header) return;
+        const headerHeight = header.clientHeight;
+        const scrollEvent = () => {
+            const scrollY = window.scrollY;
+            if (scrollY > headerHeight) {
+                header.style.backgroundColor = "white";
+                header.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+                header.style.transition = 'background-color 0.5s, box-shadow 0.5s';
+            } else {
+                header.style.backgroundColor = "transparent";
+                header.style.boxShadow = "none";
+            }
+        };
+        window.addEventListener("scroll", scrollEvent);
+        return () => {
+            window.removeEventListener("scroll", scrollEvent);
+        };
+    }, []);
+
+    useEffect(() => {
         const getTagList = async () => {
             const { tags, allBlogCount }: {
                 tags: Array<{
@@ -32,7 +53,6 @@ const BlogIndex = () => {
                 }>,
                 allBlogCount: number,
             } = await loadTagList();
-            console.log(tags, allBlogCount)
             if (!tags) return;
             const allTag = {
                 tag: "전체 보기",
@@ -102,6 +122,25 @@ const BlogIndex = () => {
                 liTag.style.fontWeight = "normal";
             }
         });
+
+        const getBlogList = async (tag?: string) => {
+            const url = tag ? getApiUrl(`/blog?tag=${tag}`) : getApiUrl("/blog");
+
+            const method: Method = "GET";
+            const response = await axios({
+                url,
+                method,
+            });
+            const blogs = response.data.content;
+            if (!blogs) return;
+            setBlog(blogs);
+        };
+        if (selectTag === "전체 보기") {
+            getBlogList();
+        } else {
+            getBlogList(selectTag);
+        }
+
     }, [selectTag]);
 
     const loadTagList = async () => {
@@ -117,6 +156,30 @@ const BlogIndex = () => {
 
     return (
         <>
+            <div
+                style={{
+                    position: "fixed",
+                    opacity: "0.3",
+                    top: "85%",
+                    left: "90%",
+                    zIndex: 100,
+                }}
+                className="scroll-up">
+                <img
+                    style={{
+                        width: "50px",
+                        height: "50px",
+                        cursor: "pointer",
+                    }}
+                    src="/scroll-up.png"
+                    onClick={() => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth",
+                        });
+                    }}
+                />
+            </div>
             <div
                 style={{
                 }}

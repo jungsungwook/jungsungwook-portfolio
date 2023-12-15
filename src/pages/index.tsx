@@ -1,12 +1,3 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import axios, { Method } from 'axios'
-import { timeConvert, timezoneConvert } from '@/utils/timezoneConvet'
-import { useRecoilState } from 'recoil'
-import { isLoginState } from '@/states/is-login'
-
 const Home = () => {
   // const [isLogin, setIsLoginState] = useRecoilState(isLoginState);
 
