@@ -1035,6 +1035,10 @@ a {
 
 }
 
+.main_header_contents2 a {
+    cursor: pointer;
+}
+
 .main_header_contents2 a+a::before {
     content: "";
     position: absolute;

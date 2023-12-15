@@ -25,17 +25,18 @@ const BlogIndex = () => {
 
     useEffect(() => {
         const getTagList = async () => {
-            const tags: Array<{
-                tag: string,
-                tagCount: number
-            }> = await loadTagList();
+            const { tags, allBlogCount }: {
+                tags: Array<{
+                    tag: string,
+                    tagCount: number
+                }>,
+                allBlogCount: number,
+            } = await loadTagList();
+            console.log(tags, allBlogCount)
             if (!tags) return;
-            const allTagCount = tags.reduce((acc, cur) => {
-                return acc + cur.tagCount;
-            }, 0);
             const allTag = {
                 tag: "전체 보기",
-                tagCount: allTagCount,
+                tagCount: allBlogCount,
             };
             const tagList = [allTag];
             tags.forEach((tag) => {
@@ -45,7 +46,7 @@ const BlogIndex = () => {
         };
         const getBlogList = async () => {
             const url = getApiUrl("/blog");
-            
+
             const method: Method = "GET";
             const response = await axios({
                 url,
@@ -110,8 +111,8 @@ const BlogIndex = () => {
             url,
             method,
         });
-        const tags = response.data.content;
-        return tags;
+        const { tags, allBlogCount } = response.data.content;
+        return { tags, allBlogCount };
     };
 
     return (
@@ -150,6 +151,8 @@ const BlogIndex = () => {
                                 width: "100%",
                                 height: "1px",
                                 backgroundColor: "black",
+                                // 굵기
+                                opacity: "0.3",
                             }}
                         ></div>
                         <ul className="blog-tag-list" style={{
@@ -173,7 +176,12 @@ const BlogIndex = () => {
                     }}>
                         {
                             blog.length === 0 ?
-                                <div>게시글이 없습니다.</div> :
+                                <div
+                                    style={{
+                                        paddingLeft: "41%",
+                                        paddingTop: "20%"
+                                    }}
+                                >게시글이 없습니다.</div> :
                                 blog.map((b) => {
                                     return BlogPostComponent({
                                         card_type: "blog",

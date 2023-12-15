@@ -2,11 +2,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import DbHandler from '@/database/dbHandler';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { tags } = await getTags();
+    const { tags, allBlogCount } = await getTags();
     // res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
     res.status(200).json({
         "statusCode": 200,
-        "content": tags
+        "content": {
+            tags,
+            allBlogCount
+        }
     });
 }
 
@@ -21,5 +24,11 @@ const getTags = async () => {
         WHERE isDeleted = 0
         GROUP BY tag;
     `);
-    return { tags };
+    const allBlogCount = await db.get(`
+        SELECT COUNT(id) as allBlogCount
+        FROM blog
+        WHERE isDeleted = 0;
+        GROUP BY id;
+    `);
+    return { tags, allBlogCount: allBlogCount.allBlogCount };
 }

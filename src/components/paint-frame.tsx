@@ -8,7 +8,7 @@ import SocketIoClient from 'socket.io-client';
  */
 const PaintFrame = () => {
     const canvasRef = useRef(null);
-    const otherCanvasContext : any = {}
+    const otherCanvasContext: any = {}
     const contextRef = useRef(null);
     const [ctx, setCtx]: any = useState();
     const otherUser: any[] = [];
@@ -18,6 +18,7 @@ const PaintFrame = () => {
     const socketRef = useRef(null);
 
     const colorRef = useRef("black");
+
 
     useEffect(() => {
         window.addEventListener("contextmenu", e => e.preventDefault());
@@ -39,10 +40,10 @@ const PaintFrame = () => {
         contextRef.current = context;
 
         setCtx(context);
-
+        if (connected) { console.log('already connected'); return }
         // 소켓 통신 연결
-        {/* @ts-ignore */}
-        const socket = SocketIoClient.connect(`${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_Socket_Port}`,{
+        {/* @ts-ignore */ }
+        const socket = SocketIoClient.connect(`${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_Socket_Port}`, {
             secure: true,
             rejectUnauthorized: false,
         });
@@ -55,7 +56,7 @@ const PaintFrame = () => {
         socket.on("guest_enter", (data: { uid: string }) => {
             otherUser.push(data.uid);
 
-            const newCanvas : any = document.createElement("canvas");
+            const newCanvas: any = document.createElement("canvas");
             newCanvas.id = data.uid + "_canvas";
             newCanvas.width = 2560;
             newCanvas.height = 1440;
@@ -96,7 +97,7 @@ const PaintFrame = () => {
             for (const user of users) {
                 if (user !== data.uid) {
                     otherUser.push(user);
-                    const newCanvas : any = document.createElement("canvas");
+                    const newCanvas: any = document.createElement("canvas");
                     newCanvas.id = user + "_canvas";
                     newCanvas.width = 2560;
                     newCanvas.height = 1440;
@@ -134,7 +135,7 @@ const PaintFrame = () => {
             const otherContext = otherCanvasContext[data.uid];
             if (!otherContext) {
                 otherUser.push(data.uid);
-                const newCanvas : any = document.createElement("canvas");
+                const newCanvas: any = document.createElement("canvas");
                 newCanvas.id = data.uid + "_canvas";
                 newCanvas.width = 2560;
                 newCanvas.height = 1440;
@@ -172,7 +173,7 @@ const PaintFrame = () => {
             const otherContext = otherCanvasContext[data.uid];
             if (!otherContext) {
                 otherUser.push(data.uid);
-                const newCanvas : any = document.createElement("canvas");
+                const newCanvas: any = document.createElement("canvas");
                 newCanvas.id = data.uid + "_canvas";
                 newCanvas.width = 2560;
                 newCanvas.height = 1440;
@@ -216,6 +217,10 @@ const PaintFrame = () => {
 
         window.addEventListener('resize', onResize, false);
         onResize();
+        return () => {
+            // 소켓 연결 해제
+            socket.disconnect();
+        };
     }, []);
 
     const startDrawing = () => {
@@ -242,6 +247,7 @@ const PaintFrame = () => {
         imageData: any
     ) => {
         const canvas = document.getElementById("load_canvas") as HTMLCanvasElement;
+        if (!canvas) return;
         const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
         const image = new Image();
         image.src = imageData;
@@ -290,7 +296,7 @@ const PaintFrame = () => {
 
     }
 
-    const drawing = ({ nativeEvent } : any) => {
+    const drawing = ({ nativeEvent }: any) => {
         const { offsetX, offsetY } = nativeEvent;
         if (ctx) {
             ctx.strokeStyle = colorRef.current ? colorRef.current : "black";
@@ -298,7 +304,7 @@ const PaintFrame = () => {
                 ctx.beginPath();
                 ctx.moveTo(offsetX, offsetY);
                 try {
-                    {/* @ts-ignore */}
+                    {/* @ts-ignore */ }
                     socketRef.current.emit("mouse_move", { offsetX, offsetY });
                 } catch (e) { }
             } else {
@@ -309,7 +315,7 @@ const PaintFrame = () => {
                 ctx.lineTo(offsetX, offsetY);
                 ctx.stroke();
                 if (socketRef.current) {
-                    {/* @ts-ignore */}
+                    {/* @ts-ignore */ }
                     socketRef.current.emit("drawing",
                         {
                             offsetX,
