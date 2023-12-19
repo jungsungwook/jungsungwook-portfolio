@@ -1,13 +1,16 @@
 import { isLoginState } from "@/states/is-login";
 import { set } from "animejs";
 import axios, { Method } from "axios";
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import BlogPostComponent from "./components/blogPostComponents";
 import { getApiUrl } from "@/utils/getApiUrl";
 
 const BlogIndex = () => {
+    const tagInfo: any = {};
+    const blogLoding = useRef<boolean>(false);
+    const pageNumber = useRef<number>(1);
     const [selectTag, setSelectTag] = useState<string>("전체 보기");
     const [tagList, setTagList] = useState<Array<{
         tag: string,
@@ -44,6 +47,27 @@ const BlogIndex = () => {
         };
     }, []);
 
+    // 무한스크롤페이지를 구현.
+    // 스크롤 이벤트를 사용해서, 스크롤이 끝에 도달하면, 다음 페이지를 불러온다.
+    useEffect(() => {
+        const handleScroll = () => {
+            // 스크롤 위치에 따라 추가 데이터를 로드하는 로직
+            const scrollPosition = window.innerHeight + window.pageYOffset;
+            const documentHeight = document.documentElement.scrollHeight;
+            // 90% 지점에 도달하면 추가 데이터를 로드한다.
+            if (scrollPosition >= documentHeight * 0.9) {
+                const isLoading = blogLoding.current;
+                if (isLoading) return;
+                pageNumber.current = pageNumber.current + 1;
+                blogLoding.current = true;
+                loadPage(pageNumber.current, selectTag, false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     useEffect(() => {
         const getTagList = async () => {
             const { tags, allBlogCount }: {
@@ -58,26 +82,17 @@ const BlogIndex = () => {
                 tag: "전체 보기",
                 tagCount: allBlogCount,
             };
+            tagInfo["전체 보기"] = allBlogCount;
+
             const tagList = [allTag];
             tags.forEach((tag) => {
                 tagList.push(tag);
+                tagInfo[tag.tag] = tag.tagCount;
             });
-            setTagList(tagList);
-        };
-        const getBlogList = async () => {
-            const url = getApiUrl("/blog");
-
-            const method: Method = "GET";
-            const response = await axios({
-                url,
-                method,
-            });
-            const blogs = response.data.content;
-            if (!blogs) return;
-            setBlog(blogs);
+            setTagList(() => tagList);
+            await loadPage(pageNumber.current, selectTag);
         };
         getTagList();
-        getBlogList();
     }, []);
 
     useEffect(() => {
@@ -113,6 +128,7 @@ const BlogIndex = () => {
     }, [tagList]);
 
     useEffect(() => {
+        pageNumber.current = 1;
         const loadTagList = document.querySelectorAll(".blog-tag-list li");
         loadTagList.forEach((tag) => {
             const liTag = tag as HTMLLIElement;
@@ -123,24 +139,7 @@ const BlogIndex = () => {
             }
         });
 
-        const getBlogList = async (tag?: string) => {
-            const url = tag ? getApiUrl(`/blog?tag=${tag}`) : getApiUrl("/blog");
-
-            const method: Method = "GET";
-            const response = await axios({
-                url,
-                method,
-            });
-            const blogs = response.data.content;
-            if (!blogs) return;
-            setBlog(blogs);
-        };
-        if (selectTag === "전체 보기") {
-            getBlogList();
-        } else {
-            getBlogList(selectTag);
-        }
-
+        loadPage(pageNumber.current, selectTag);
     }, [selectTag]);
 
     const loadTagList = async () => {
@@ -152,6 +151,22 @@ const BlogIndex = () => {
         });
         const { tags, allBlogCount } = response.data.content;
         return { tags, allBlogCount };
+    };
+
+    const loadPage = async (pageNumber: number, tag?: string, isOW: boolean = true) => {
+        if (tag === "전체 보기") tag = undefined;
+        const maxPage = tag ? Math.ceil(tagInfo[tag] / 10) : Math.ceil(tagInfo["전체 보기"] / 10);
+        if (pageNumber > maxPage) return;
+        const url = tag ? getApiUrl(`/blog?tag=${tag}&page=${pageNumber}`) : getApiUrl(`/blog?page=${pageNumber}`);
+        const method: Method = "GET";
+        const response = await axios({
+            url,
+            method,
+        });
+        const blogs = response.data.content;
+        if (!blogs) return;
+        isOW ? setBlog(blogs) : setBlog(prev => [...prev, ...blogs]);
+        blogLoding.current = false;
     };
 
     return (

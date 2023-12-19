@@ -22,6 +22,7 @@ const path = require('path'); // 1. path 선언
 // })
 
 module.exports = {
+    reactStrictMode: false,
     async redirects() {
         return [{
             source: '/',
