@@ -9,6 +9,8 @@ import { getApiUrl } from "@/utils/getApiUrl";
 
 const BlogIndex = () => {
     const tagInfo: any = {};
+    const searchKeyword = useRef<any>(undefined);
+    const currentTag = useRef<string>("전체 보기");
     const blogLoding = useRef<boolean>(false);
     const pageNumber = useRef<number>(1);
     const [selectTag, setSelectTag] = useState<string>("전체 보기");
@@ -60,7 +62,7 @@ const BlogIndex = () => {
                 if (isLoading) return;
                 pageNumber.current = pageNumber.current + 1;
                 blogLoding.current = true;
-                loadPage(pageNumber.current, selectTag, false);
+                loadPage(pageNumber.current, currentTag.current, searchKeyword.current, false);
             }
         };
 
@@ -90,7 +92,7 @@ const BlogIndex = () => {
                 tagInfo[tag.tag] = tag.tagCount;
             });
             setTagList(() => tagList);
-            await loadPage(pageNumber.current, selectTag);
+            await loadPage(pageNumber.current, currentTag.current);
         };
         getTagList();
     }, []);
@@ -128,6 +130,8 @@ const BlogIndex = () => {
     }, [tagList]);
 
     useEffect(() => {
+        searchKeyword.current = undefined;
+        currentTag.current = selectTag;
         pageNumber.current = 1;
         const loadTagList = document.querySelectorAll(".blog-tag-list li");
         loadTagList.forEach((tag) => {
@@ -153,11 +157,15 @@ const BlogIndex = () => {
         return { tags, allBlogCount };
     };
 
-    const loadPage = async (pageNumber: number, tag?: string, isOW: boolean = true) => {
+    const loadPage = async (pageNumber: number, tag?: string, search?: string, isOW: boolean = true) => {
         if (tag === "전체 보기") tag = undefined;
         const maxPage = tag ? Math.ceil(tagInfo[tag] / 10) : Math.ceil(tagInfo["전체 보기"] / 10);
         if (pageNumber > maxPage) return;
-        const url = tag ? getApiUrl(`/blog?tag=${tag}&page=${pageNumber}`) : getApiUrl(`/blog?page=${pageNumber}`);
+
+        let url = getApiUrl(`/blog?page=${pageNumber}`);
+        if (tag) url += `&tag=${tag}`;
+        if (search) url += `&search=${search}`;
+
         const method: Method = "GET";
         const response = await axios({
             url,
@@ -167,6 +175,15 @@ const BlogIndex = () => {
         if (!blogs) return;
         isOW ? setBlog(blogs) : setBlog(prev => [...prev, ...blogs]);
         blogLoding.current = false;
+    };
+
+    const handleSearch = async () => {
+        const searchInput = document.querySelector("#search-input") as HTMLInputElement;
+        searchKeyword.current = searchInput.value;
+        if (searchKeyword.current === "") searchKeyword.current = undefined;
+        pageNumber.current = 1;
+        blogLoding.current = true;
+        await loadPage(pageNumber.current, selectTag, searchKeyword.current);
     };
 
     return (
@@ -206,6 +223,45 @@ const BlogIndex = () => {
                     justifyContent: "center",
                     padding: "5% 0 3% 0",
                 }}>이것저것 블로그</div>
+                <div className="search-box" style={{
+                    display: "flex",
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                    justifyContent: "center",
+                    padding: "0 0 1% 0",
+                }}>
+                    <input type="text" id="search-input"
+                        style={{
+                            width: "50%",
+                            height: "3rem",
+                            borderRadius: "0.1rem",
+                            border: "3px solid #c4c4c4",
+                            paddingLeft: "1rem",
+                            fontSize: "1rem",
+                        }}
+                        placeholder="태그를 선택한 뒤 검색어를 입력해주세요."
+                        onKeyPress={(e) => {
+                            if (e.key === "Enter") {
+                                handleSearch();
+                            }
+                        }}
+                    />
+                    <button
+                        className="search-button"
+                        style={{
+                            width: "3%",
+                            height: "auto",
+                            borderRadius: "0.1rem",
+                            border: "1px solid #6E6E6E",
+                            backgroundColor: "#6E6E6E",
+                            marginLeft: "0.5rem",
+                            cursor: "pointer",
+                            color: "white",
+                            transition: "background-color 0.25s, color 0.25s, font-weight 0.25s",
+                        }}
+                        onClick={handleSearch}
+                    >검색</button>
+                </div>
                 <div
                     style={{
                         display: "flex",
@@ -276,7 +332,13 @@ const BlogIndex = () => {
                     </div>
                     <div style={{
                         flex: "15%"
-                    }}>검색
+                    }}>
+                        <div style={{
+                        }}>실시간 채팅
+                        </div>
+                        <div style={{
+                        }}>방명록
+                        </div>
                     </div>
                 </div>
             </div >

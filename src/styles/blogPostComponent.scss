@@ -11,6 +11,12 @@
     }
 }
 
+.search-button:hover {
+    background-color: white !important;
+    color: #6E6E6E !important;
+    font-weight: 600 !important;
+}
+
 .card-wrapper {
     flex-shrink: 0;
     margin: 2%;
