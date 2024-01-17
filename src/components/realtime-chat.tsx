@@ -11,7 +11,7 @@ const RealTimeChat = () => {
     const handleChatSend = async () => {
         const chatInput = document.querySelector("#chat-input") as HTMLInputElement;
         if (chatInput.value == '') return;
-        const socket = socketRef.current;
+        const socket: any = socketRef.current;
         if(socket == null) return;
         socket.emit("chat", {
             msg: chatInput.value
