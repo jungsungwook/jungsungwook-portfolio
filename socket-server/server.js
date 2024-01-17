@@ -32,7 +32,7 @@ const credentials = prod ? {
     key: privateKey,
     cert: certificate
 } : null;
-const socketserver = prod ? require('https').createServer(credentials ,socketapp) : require('http').createServer(socketapp);
+const socketserver = prod ? require('https').createServer(credentials, socketapp) : require('http').createServer(socketapp);
 const cors = require('cors');
 socketapp.use(cors());
 const ports = {
@@ -95,8 +95,23 @@ app.prepare().then(() => {
     });
 
     io.on('connection', socket => {
-        // socket으로 메세지가 들어올 때 
-        socket.on('message', (data) => {
+        socket.on('chat_connect', (data) => {
+                const uid = Math.random().toString(36).substr(2, 11);
+                socketUid[socket.id] = uid;
+                // 현재 접속중인 유저 uid 전달
+                const users = Object.values(socketUid);
+
+                socket.emit('connected', {
+                    uid: uid,
+                    users: users,
+                });
+
+                socket.broadcast.emit('guest_enter', {
+                    uid: uid,
+                });
+            }),
+            // socket으로 메세지가 들어올 때 
+            socket.on('message', (data) => {
                 // 랜덤 uid
                 const uid = Math.random().toString(36).substr(2, 11);
                 socketUid[socket.id] = uid;
@@ -114,6 +129,16 @@ app.prepare().then(() => {
 
                 canvas[uid] = createCanvas(2560, 1440);
                 ctx[uid] = canvas[uid].getContext('2d');
+            }),
+
+            socket.on('chat', (data) => {
+                socket.broadcast.emit('chat', {
+                    uid: socketUid[socket.id],
+                    msg: data.msg,
+                })
+                socket.emit("my_chat", {
+                    msg: data.msg
+                })
             }),
 
             socket.on('drawing', (data) => {
@@ -143,21 +168,21 @@ app.prepare().then(() => {
                 ctx[socketUid[socket.id]].moveTo(data.offsetX, data.offsetY);
             })
 
-            socket.on('sync_canvas', (data) => {
-                mergeCanvas();
-                socket.emit('sync_canvas', {
-                    canvas: mainCanvas.toDataURL(),
-                })
+        socket.on('sync_canvas', (data) => {
+            mergeCanvas();
+            socket.emit('sync_canvas', {
+                canvas: mainCanvas.toDataURL(),
             })
-            
-            socket.on('disconnect', () => {
-                socket.broadcast.emit('guest_exit', {
-                    uid: socketUid[socket.id],
-                })
-                delete socketUid[socket.id];
-                delete canvas[socketUid[socket.id]];
-                delete ctx[socketUid[socket.id]];
+        })
+
+        socket.on('disconnect', () => {
+            socket.broadcast.emit('guest_exit', {
+                uid: socketUid[socket.id],
             })
+            delete socketUid[socket.id];
+            delete canvas[socketUid[socket.id]];
+            delete ctx[socketUid[socket.id]];
+        })
 
     });
 
