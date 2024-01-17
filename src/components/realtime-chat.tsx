@@ -103,6 +103,7 @@ const RealTimeChat = () => {
                     bottom: 0,
                     right: 0,
                     // width는 부모의 크기
+                    marginTop: "5px"
                 }}
                 className="chat-box">
                 <div

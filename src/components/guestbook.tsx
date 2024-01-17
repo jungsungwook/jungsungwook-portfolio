@@ -1,4 +1,51 @@
+import { useEffect, useState } from "react";
+import { getApiUrl } from "@/utils/getApiUrl";
+import axios, { Method } from "axios";
+import { timeConvertUtcToKst } from '@/utils/timezoneConvet';
+
 const GuestBook = () => {
+    const [guestBook, setGuestBook] = useState<Array<{
+        id?: number,
+        userId?: string,
+        ip?: string,
+        contents?: string,
+        createdAt?: string
+    }>>([]);
+
+    useEffect(() => {
+        loadGuestBook();
+    }, []);
+
+    const loadGuestBook = async () => {
+        let url = getApiUrl(`/blog/guestbook`);
+        const method: Method = "GET";
+        const response = await axios({
+            url,
+            method,
+        });
+
+        const guestBooks = response.data.content;
+        if (!guestBooks) return;
+        setGuestBook(guestBooks);
+    };
+
+    const handleWriteButton = async () => {
+        const writeInput = document.querySelector("#msg-input") as HTMLInputElement;
+        if (writeInput.value == '') return;
+
+        let url = getApiUrl(`/blog/guestbook`);
+        const method: Method = "POST";
+        const response = await axios({
+            url,
+            method,
+            data: {
+                contents: writeInput.value
+            }
+        });
+        console.log(response);
+
+        writeInput.value = "";
+    };
 
     return (
         <>
@@ -7,7 +54,7 @@ const GuestBook = () => {
                     margin: "10px 0 100px 0",
                 }}
                 className="guestbook-area"
-                >
+            >
                 방명록
                 <div
                     style={{
@@ -16,15 +63,44 @@ const GuestBook = () => {
                         height: "30rem",
                         maxHeight: "30rem",
                         overflow: "auto",
-                        display: "flex",
+                        // display: "flex",
                         flexDirection: "column",
                         backgroundColor: "white",
                         border: "1px solid black",
+                        marginTop: "5px"
                     }}
                     className='guestbook-box'
                 >
-                    <span>[24/01/17 15:00:34] 안녕하세요 잘 보고 갑니다 ㅋㅋ</span>
-                    <span>[24/01/17 17:21:19] 별 거 없는 거 같은데..</span>
+                    {
+                        guestBook.length !== 0 ?
+                            guestBook.map((g, i) => {
+                                return (
+                                    <>
+                                        <div style={{
+                                            margin: "5px 5px 5px 5px"
+                                        }}>
+                                            <span>{g.contents}</span>
+                                            <span style={{
+                                                fontSize: '12px'
+                                            }}> ({timeConvertUtcToKst(g.createdAt as string)})</span>
+                                            <span style={{
+                                                fontSize: '12px'
+                                            }}> [작성자: {g.userId ? g.userId : 'Guest'}]</span>
+                                        </div>
+                                        <div
+                                            style={{
+                                                width: "100%",
+                                                height: "2px",
+                                                backgroundColor: "black",
+                                                // 굵기
+                                                opacity: "0.3",
+                                            }}
+                                        ></div>
+                                    </>
+                                )
+                            })
+                            : <></>
+                    }
                 </div>
                 <div
                     style={{
@@ -34,7 +110,7 @@ const GuestBook = () => {
                     }}
                     className='enter-msg-box'>
                     <input
-                        id="chat-input"
+                        id="msg-input"
                         style={{
                             width: "100%",
                             border: "1px solid black",
@@ -43,7 +119,7 @@ const GuestBook = () => {
                         className='msg-input'
                         onKeyPress={(e) => {
                             if (e.key === "Enter") {
-                                // handleChatSend();
+                                handleWriteButton();
                             }
                         }}
                     />
@@ -53,7 +129,7 @@ const GuestBook = () => {
                             border: "1px solid black",
                         }}
                         className='send-msg-btn'
-                        // onClick={}
+                        onClick={handleWriteButton}
                     >
                         남기기
                     </button>
