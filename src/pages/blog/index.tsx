@@ -307,7 +307,7 @@ const BlogIndex = () => {
                         flexDirection: "row",
                         flexWrap: "wrap",
                         justifyContent: "flex-start",
-                        alignItems: "center",
+                        alignItems: "flex-start",
                         flex: "70%",
                         paddingLeft: "0.5%",
                         marginBottom: "5rem",
