@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import DbHandler from '@/database/dbHandler';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const ip = req.ip;
+    const ip = req.connection.remoteAddress;
 
     res.status(200).json({
         "statusCode": 200,

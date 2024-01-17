@@ -12,7 +12,7 @@ const RealTimeChat = () => {
         const chatInput = document.querySelector("#chat-input") as HTMLInputElement;
         if (chatInput.value == '') return;
         const socket: any = socketRef.current;
-        if(socket == null) return;
+        if (socket == null) return;
         socket.emit("chat", {
             msg: chatInput.value
         });
@@ -20,7 +20,8 @@ const RealTimeChat = () => {
     };
 
     const chatScrollDown = () => {
-        const chatUI = chatRef.current;
+        const chatUI: any = chatRef.current;
+        if (chatUI == null) return;
         chatUI.scrollTop = chatUI.scrollHeight;
     }
 
@@ -38,12 +39,14 @@ const RealTimeChat = () => {
 
         socket.on("guest_enter", (data: { uid: string }) => {
             otherUser.push(data.uid);
-            const chatBox = chatRef.current;
-            const chatMsg = document.createElement("span")
-            chatMsg.className = "chat-msg system-msg"
-            chatMsg.innerHTML = `[system] ${data.uid}님이 채팅서버에 입장하였습니다.`
-            chatBox.appendChild(chatMsg);
-            chatScrollDown();
+            const chatBox: any = chatRef.current;
+            const chatMsg: any = document.createElement("span")
+            if (chatBox && chatMsg) {
+                chatMsg.className = "chat-msg system-msg"
+                chatMsg.innerHTML = `[system] ${data.uid}님이 채팅서버에 입장하였습니다.`
+                chatBox.appendChild(chatMsg);
+                chatScrollDown();
+            }
         });
 
         socket.on("guest_exit", (data: { uid: string }) => {
@@ -51,30 +54,36 @@ const RealTimeChat = () => {
         });
 
         socket.on("chat", (data: { uid: string, msg: string }) => {
-            const chatBox = chatRef.current;
-            const chatMsg = document.createElement("span")
-            chatMsg.className = "chat-msg other-msg"
-            chatMsg.innerHTML = `${data.uid} : ${data.msg}`
-            chatBox.appendChild(chatMsg);
-            chatScrollDown();
+            const chatBox: any = chatRef.current;
+            const chatMsg: any = document.createElement("span")
+            if (chatBox && chatMsg) {
+                chatMsg.className = "chat-msg other-msg"
+                chatMsg.innerHTML = `${data.uid} : ${data.msg}`
+                chatBox.appendChild(chatMsg);
+                chatScrollDown();
+            }
         });
 
         socket.on("my_chat", (data: { msg: string }) => {
-            const chatBox = chatRef.current;
-            const chatMsg = document.createElement("span")
-            chatMsg.className = "chat-msg my-msg"
-            chatMsg.innerHTML = `나 : ${data.msg}`
-            chatBox.appendChild(chatMsg);
-            chatScrollDown();
+            const chatBox: any = chatRef.current;
+            const chatMsg: any = document.createElement("span")
+            if (chatBox && chatMsg) {
+                chatMsg.className = "chat-msg my-msg"
+                chatMsg.innerHTML = `나 : ${data.msg}`
+                chatBox.appendChild(chatMsg);
+                chatScrollDown();
+            }
         });
 
         socket.on("connected", (data: any) => {
-            const chatBox = chatRef.current;
-            const chatMsg = document.createElement("span")
-            chatMsg.className = "chat-msg system-msg"
-            chatMsg.innerHTML = `[system] 채팅서버 연결에 성공하였습니다. 현재 인원은 ${data.users.length}명 입니다.`
-            chatBox.appendChild(chatMsg);
-            chatScrollDown();
+            const chatBox: any = chatRef.current;
+            const chatMsg: any = document.createElement("span")
+            if (chatBox && chatMsg) {
+                chatMsg.className = "chat-msg system-msg"
+                chatMsg.innerHTML = `[system] 채팅서버 연결에 성공하였습니다. 현재 인원은 ${data.users.length}명 입니다.`
+                chatBox.appendChild(chatMsg);
+                chatScrollDown();
+            }
         });
 
         socket.on("disconnect", () => {
