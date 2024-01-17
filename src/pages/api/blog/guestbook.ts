@@ -33,14 +33,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 FROM blog_guestbook_log
                 WHERE isDeleted = 0
                 AND
-                ip='2.2.2.2'
+                ip='${realIp}'
                 ORDER BY createdAt DESC
             `);
-            const lastDateTime: any = new Date(timeCheck.createdAt);
-            const currentDate: any = new Date();
-            
-            const oneHourPassed = (currentDate - lastDateTime) >= (1 * 60 * 60 * 1000);
-            if(!oneHourPassed) res.status(403).json({ statusCode: 403, content: "방명록은 하루에 한 번 작성할 수 있습니다." });
+
+            if (timeCheck) {
+                const lastDateTime: any = new Date(timeCheck.createdAt);
+                const currentDate: any = new Date();
+
+                const oneHourPassed = (currentDate - lastDateTime) >= (1 * 60 * 60 * 1000);
+                if (!oneHourPassed) res.status(403).json({ statusCode: 403, content: "방명록은 하루에 한 번 작성할 수 있습니다." });
+            }
 
             const result = await db.run(`
                 INSERT INTO blog_guestbook_log (ip,contents)
