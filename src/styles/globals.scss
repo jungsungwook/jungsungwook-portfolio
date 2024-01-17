@@ -1059,3 +1059,12 @@ a {
     margin-bottom: 0;
     cursor: pointer;
 }
+
+.chat-msg {
+    font-size: small;
+    word-break: break-all;
+}
+
+.system-msg {
+    font-weight: bolder;
+}

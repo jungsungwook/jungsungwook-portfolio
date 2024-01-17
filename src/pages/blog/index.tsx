@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import BlogPostComponent from "./components/blogPostComponents";
 import { getApiUrl } from "@/utils/getApiUrl";
+import RealTimeChat from "@/components/realtime-chat";
+import GuestBook from "@/components/guestbook";
 
 const BlogIndex = () => {
     const tagInfo: any = {};
@@ -46,6 +48,8 @@ const BlogIndex = () => {
         window.addEventListener("scroll", scrollEvent);
         return () => {
             window.removeEventListener("scroll", scrollEvent);
+            header.style.backgroundColor = "transparent";
+            header.style.boxShadow = "none";
         };
     }, []);
 
@@ -331,14 +335,11 @@ const BlogIndex = () => {
                         }
                     </div>
                     <div style={{
-                        flex: "15%"
+                        flex: "15%",
+                        margin: "0 10px 0 0"
                     }}>
-                        <div style={{
-                        }}>실시간 채팅
-                        </div>
-                        <div style={{
-                        }}>방명록
-                        </div>
+                        <RealTimeChat />
+                        <GuestBook />
                     </div>
                 </div>
             </div >
