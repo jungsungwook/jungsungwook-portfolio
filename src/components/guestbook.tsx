@@ -45,7 +45,7 @@ const GuestBook = () => {
             });
             alert("성공적으로 등록되었습니다.");
             loadGuestBook();
-        } catch (e) {
+        } catch (e: any) {
             if (e.response.status === 403) {
                 alert(e.response.data);
             } else {
