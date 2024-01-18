@@ -35,14 +35,23 @@ const GuestBook = () => {
 
         let url = getApiUrl(`/blog/guestbook`);
         const method: Method = "POST";
-        const response = await axios({
-            url,
-            method,
-            data: {
-                contents: writeInput.value
+        try {
+            const response = await axios({
+                url,
+                method,
+                data: {
+                    contents: writeInput.value
+                }
+            });
+            alert("성공적으로 등록되었습니다.");
+            loadGuestBook();
+        } catch (e) {
+            if (e.response.status === 403) {
+                alert(e.response.data);
+            } else {
+                alert("예상치 못한 오류입니다. 관리자 문의 바랍니다.");
             }
-        });
-        console.log(response);
+        }
 
         writeInput.value = "";
     };
