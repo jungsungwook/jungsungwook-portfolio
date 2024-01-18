@@ -47,7 +47,7 @@ const GuestBook = () => {
             loadGuestBook();
         } catch (e: any) {
             if (e.response.status === 403) {
-                alert(e.response.data);
+                alert(e.response.data.content);
             } else {
                 alert("예상치 못한 오류입니다. 관리자 문의 바랍니다.");
             }
