@@ -19,7 +19,9 @@ const prod = process.env.NODE_ENV === 'production';
 console.log(dev ? `Running on development mode` : `Running on production mode`)
 
 const app = next({
-    dev: dev
+    dev: dev,
+    hostname: process.env.NEXT_PUBLIC_IP,
+    port: process.env.NEXT_PUBLIC_React_Port,
 }); // next 모듈을 사용
 
 const handle = app.getRequestHandler();
