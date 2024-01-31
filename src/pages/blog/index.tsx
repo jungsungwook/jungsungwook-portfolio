@@ -13,7 +13,7 @@ const BlogIndex = () => {
     const tagInfo: any = {};
     const searchKeyword = useRef<any>(undefined);
     const currentTag = useRef<string>("전체 보기");
-    const blogLoding = useRef<boolean>(false);
+    const blogLoding = useRef<boolean>(true);
     const pageNumber = useRef<number>(1);
     const [selectTag, setSelectTag] = useState<string>("전체 보기");
     const [tagList, setTagList] = useState<Array<{
@@ -169,15 +169,23 @@ const BlogIndex = () => {
         let url = getApiUrl(`/blog?page=${pageNumber}`);
         if (tag) url += `&tag=${tag}`;
         if (search) url += `&search=${search}`;
-
-        const method: Method = "GET";
-        const response = await axios({
-            url,
-            method,
-        });
-        const blogs = response.data.content;
-        if (!blogs) return;
-        isOW ? setBlog(blogs) : setBlog(prev => [...prev, ...blogs]);
+        try {
+            const method: Method = "GET";
+            const response = await axios({
+                url,
+                method,
+            });
+            const blogs = response.data.content;
+            if (!blogs) return;
+            isOW ? setBlog(blogs) : setBlog(prev => [...prev, ...blogs]);
+        } catch (e: any) {
+            const response = e.response;
+            if (response.status != 500) {
+                alert(response.data.message)
+            } else {
+                alert("관리자에게 문의 바랍니다.")
+            }
+        }
         blogLoding.current = false;
     };
 
@@ -311,15 +319,24 @@ const BlogIndex = () => {
                         flex: "70%",
                         paddingLeft: "0.5%",
                         marginBottom: "5rem",
-                    }}>
+                    }}>{
+                            blogLoding.current == false && blog.length === 0 ? <div
+                                style={{
+                                    paddingLeft: "41%",
+                                    paddingTop: "20%"
+                                }}
+                            >게시글이 없습니다.</div> : ""
+                        }
                         {
-                            blog.length === 0 ?
+                            blogLoding.current == true ? <>
                                 <div
                                     style={{
                                         paddingLeft: "41%",
                                         paddingTop: "20%"
                                     }}
-                                >게시글이 없습니다.</div> :
+                                >페이지 로딩 중입니다...(약 3-5초 소요)</div><div style={{
+                                    paddingLeft: "41%",
+                                }}>오래 걸릴 경우 새로고침 부탁드립니다.</div></> :
                                 blog.map((b) => {
                                     return BlogPostComponent({
                                         card_type: "blog",
@@ -328,7 +345,7 @@ const BlogIndex = () => {
                                         content: b.content,
                                         created_at: b.createdAt,
                                         updated_at: b.updatedAt,
-                                        img_url: b.thumbnail,
+                                        thumbnail: b.thumbnail,
                                         tags: b.tags,
                                     });
                                 })
