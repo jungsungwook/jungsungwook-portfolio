@@ -23,7 +23,7 @@ const AdminIndex = () => {
             const result = res.data;
             if (result.statusCode == 200 || result.statusCode == '200') {
                 const role = result.content;
-                if(role < 2) {
+                if (role < 2) {
                     alert('관리자 권한이 필요합니다.');
                     router.push('/home');
                 }
@@ -33,11 +33,38 @@ const AdminIndex = () => {
             router.push('/auth/signin');
         });
     }, []);
+
+    const routerPush = (url: string) => {
+        router.push(`/admin/${url}`);
+    }
+
     return (
         <>
-            <MainFrame
-                page={0}
-            ></MainFrame>
+            <div className="admin-box">
+                <div className="admin-menu">
+                    <li>
+                        <span
+                            onClick={() => {
+                                routerPush('blog');
+                            }}
+                        >게시글 관리</span>
+                    </li>
+                    <li>
+                        <span
+                            onClick={() => {
+                                routerPush('user');
+                            }}
+                        >회원 관리</span>
+                    </li>
+                    <li>
+                        <span
+                            onClick={() => {
+                                routerPush('guestbook');
+                            }}
+                        >방명록 관리</span>
+                    </li>
+                </div>
+            </div>
         </>
     );
 };
