@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const realIp = req.headers['x-real-ip'];
-    if (!realIp) return res.status(403).json({ statusCode: 403, content: "IP 확인이 불가능하여 요청을 처리할 수 없습니다." });
+    if (process.env.NODE_ENV === 'production' && !realIp) return res.status(403).json({ statusCode: 403, content: "IP 확인이 불가능하여 요청을 처리할 수 없습니다." });
     // res.status(200).json({
     //     "statusCode": 200,
     //     "content": realIp
