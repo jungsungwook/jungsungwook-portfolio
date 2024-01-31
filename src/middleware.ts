@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
         }
         if (!token) {
             token = request.headers.get('authorization') as string;
-            return request.nextUrl.pathname.startsWith('/api') ? Response.json({ statusCode: 401, content: 'Unauthorized' }, { status: 401 })
+            return request.nextUrl.pathname.startsWith('/api') ? new Response(JSON.stringify({ statusCode: 401, content: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } })
                 : NextResponse.redirect(new URL('/auth/signin', request.url));
         }
 
@@ -30,21 +30,24 @@ export async function middleware(request: NextRequest) {
             if (data.statusCode == 200 || data.statusCode == '200') {
                 const role = data.content;
                 if (role < 2) {
-                    return request.nextUrl.pathname.startsWith('/api') ? Response.json({ statusCode: 401, content: 'Unauthorized' }, { status: 401 })
+                    return request.nextUrl.pathname.startsWith('/api') ? new Response(JSON.stringify({ statusCode: 401, content: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } })
                         : NextResponse.redirect(new URL('/auth/signin', request.url));
                 }
             } else {
-                return request.nextUrl.pathname.startsWith('/api') ? Response.json({ statusCode: 401, content: 'Unauthorized' }, { status: 401 })
+                return request.nextUrl.pathname.startsWith('/api') ? new Response(JSON.stringify({ statusCode: 401, content: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } })
                     : NextResponse.redirect(new URL('/auth/signin', request.url));
             }
         } catch (e) {
-            return request.nextUrl.pathname.startsWith('/api') ? Response.json({ statusCode: 401, content: 'Unauthorized' }, { status: 401 })
+            return request.nextUrl.pathname.startsWith('/api') ? new Response(JSON.stringify({ statusCode: 401, content: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json' } })
                 : NextResponse.redirect(new URL('/auth/signin', request.url));
         }
         return NextResponse.next();
     }
     catch (e) {
-        return Response.json({ statusCode: 500, content: 'Exception!' }, { status: 500 })
+        return new Response(JSON.stringify({ statusCode: 500, content: 'Exception!' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
 
