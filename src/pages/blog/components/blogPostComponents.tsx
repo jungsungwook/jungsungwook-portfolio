@@ -1,34 +1,38 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { timeConvertUtcToKst } from '@/utils/timezoneConvet';
+import SanitizeHtml from '@/utils/sanitizeHtml';
 
 const BlogPostComponent = ({
     card_type,
     item_id,
     title,
     content,
-    thumbnamil,
+    thumbnail,
     created_at,
     updated_at,
     user_id,
     tags,
 }: any) => {
-    const rotuer = useRouter();
-    if (thumbnamil == null) thumbnamil = "/no-image.png"
+    const router = useRouter();
+    if (thumbnail == null) thumbnail = "/no-image.png"
 
     return (
         <div key={item_id} className="card-wrapper" onClick={() => {
-            rotuer.push(`/${card_type}/${item_id}`)
+            router.push(`/${card_type}/${item_id}`)
         }}>
             {
-                thumbnamil != null && thumbnamil != "" && thumbnamil != "null" && thumbnamil != "undefined" && thumbnamil != undefined ?
+                thumbnail != null && thumbnail != "" && thumbnail != "null" && thumbnail != "undefined" && thumbnail != undefined ?
                     <div className="card-body-img">
-                        <img src={thumbnamil} />
+                        <img src={thumbnail} />
                     </div> : <></>
             }
             <div className="card-body-text">
                 <div className="card-body-text-title">{title}</div>
-                <div className="card-body-text-content">{content}</div>
+                <div className="card-body-text-content" dangerouslySetInnerHTML={{
+                    __html: SanitizeHtml(content)
+                }}>
+                </div>
             </div>
 
             <div
