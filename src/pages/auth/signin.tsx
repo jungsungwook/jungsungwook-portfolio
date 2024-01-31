@@ -39,7 +39,7 @@ const SignIn = () => {
           sameSite: 'strict',
           path: '/',
         });
-        Router.push('/home');
+        Router.back();
       } catch (e: any) {
         if (e.response.data.message == 'Id does not exists') {
           alert('존재하지 않는 아이디입니다.');
