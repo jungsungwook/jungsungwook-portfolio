@@ -27,7 +27,7 @@ export default async function handler(
             }
             return res.status(200).json({ statusCode: 200, content: user.role });
         } catch (e) {
-
+            res.status(401).json({ statusCode: 401, content: 'Unauthorized' });
         }
     } else {
         res.status(400).json({ message: 'Bad request' });
