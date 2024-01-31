@@ -1,0 +1,21 @@
+.admin-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.admin-menu > li {
+    margin-bottom: 10px;
+}
+
+.admin-menu > li > span {
+    cursor: pointer;
+
+}
+
+.admin-menu > li > span:hover {
+    color: rgb(255, 0, 0);
+}
