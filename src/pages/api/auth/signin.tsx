@@ -21,7 +21,7 @@ export default async function handler(
                 res.status(403).json({ message: 'Password does not match' });
                 return;
             }
-            const token = jwt.sign({ customId: user.customId, role: user.role }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+            const token = jwt.sign({ customId: user.customId, role: user.role }, process.env.JWT_SECRET as string, { expiresIn: '12h' });
             res.status(200).json({ message: 'success', token });
         } catch (e) {
 
