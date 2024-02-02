@@ -61,14 +61,14 @@ const EditFrame = (props: {
         formData.append('content', contents);
         formData.append('subject', title);
         formData.append('tags', tags.join());
-        
+
         if (selectedImage) {
             formData.append('image', selectedImage);
         }
-        try{
+        try {
             const response = await axios.post(getApiUrl('/blog'), formData);
             console.log(response)
-        }catch(e){
+        } catch (e) {
             console.log(e);
         }
     }
@@ -116,7 +116,7 @@ const EditFrame = (props: {
             toolbar: {
                 container: [
                     [{ header: [1, 2, 3, 4, 5, false] }],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                    ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
                     [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
                     ['link', 'image'],
                     [{ 'align': [] }, { 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
@@ -131,12 +131,12 @@ const EditFrame = (props: {
     );
 
     const formats = [
-        'font',
         'header',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'bold', 'italic', 'underline', 'strike', 'blockquote','code-block',
         'list', 'bullet', 'indent',
+        'link','image',
         'align', 'color', 'background',
-        'image',
+        'clean',
     ]
 
     useEffect(() => {
