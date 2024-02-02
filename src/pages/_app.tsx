@@ -1,6 +1,7 @@
 import '@/styles/globals.scss'
 import '@/styles/blogPostComponent.scss'
 import '@/styles/adminPage.scss'
+import 'highlight.js/styles/monokai-sublime.css';
 import type { AppProps } from 'next/app'
 import { RecoilRoot } from 'recoil'
 import dynamic from 'next/dynamic'
